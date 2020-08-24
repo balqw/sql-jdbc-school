@@ -1,18 +1,16 @@
-package domain;
+package domain.entity;
 
 public class Student {
     private int id;
+    private int group_id ;
     private String first_name;
     private String last_name;
-    private int group_id;
+
 
     public int getId() {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getFirst_name() {
         return first_name;
@@ -38,9 +36,26 @@ public class Student {
         this.group_id = group_id;
     }
 
-    public Student(int id, String first_name, String last_name) {
-        this.id = id;
+    public Student(int group_id, String first_name, String last_name) {
+        this.group_id = group_id;
         this.first_name = first_name;
         this.last_name = last_name;
+    }
+
+    public Student(int id, int group_id, String first_name, String last_name) {
+        this.id = id;
+        this.group_id = group_id;
+        this.first_name = first_name;
+        this.last_name = last_name;
+    }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "id=" + id +
+                ", group_id=" + group_id +
+                ", first_name='" + first_name + '\'' +
+                ", last_name='" + last_name + '\'' +
+                '}';
     }
 }

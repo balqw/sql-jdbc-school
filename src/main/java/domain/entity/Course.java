@@ -1,4 +1,4 @@
-package domain;
+package domain.entity;
 
 public class Course {
     private int id;
@@ -9,9 +9,6 @@ public class Course {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
@@ -29,8 +26,7 @@ public class Course {
         this.description = description;
     }
 
-    public Course(int id, String name, String description) {
-        this.id = id;
+    public Course( String name, String description) {
         this.name = name;
         this.description = description;
     }
