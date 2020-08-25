@@ -26,7 +26,7 @@ public class DBConnection {
             password = properties.getProperty("password");
 
         } catch (IOException e) {
-            System.out.println("cannot find properties");
+            System.out.println("properties doesn't exists");
         }
          finally {
             try {
