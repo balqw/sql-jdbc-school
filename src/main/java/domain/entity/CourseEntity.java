@@ -1,6 +1,6 @@
 package domain.entity;
 
-public class Course {
+public class CourseEntity {
     private int id;
     private String name;
     private String description;
@@ -26,7 +26,7 @@ public class Course {
         this.description = description;
     }
 
-    public Course( String name, String description) {
+    public CourseEntity(String name, String description) {
         this.name = name;
         this.description = description;
     }

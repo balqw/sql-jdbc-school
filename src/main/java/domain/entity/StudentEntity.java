@@ -1,6 +1,6 @@
 package domain.entity;
 
-public class Student {
+public class StudentEntity {
     private int id;
     private int group_id ;
     private String first_name;
@@ -36,13 +36,17 @@ public class Student {
         this.group_id = group_id;
     }
 
-    public Student(int group_id, String first_name, String last_name) {
+    public StudentEntity() {
+
+    }
+
+    public StudentEntity(int group_id, String first_name, String last_name) {
         this.group_id = group_id;
         this.first_name = first_name;
         this.last_name = last_name;
     }
 
-    public Student(int id, int group_id, String first_name, String last_name) {
+    public StudentEntity(int id, int group_id, String first_name, String last_name) {
         this.id = id;
         this.group_id = group_id;
         this.first_name = first_name;

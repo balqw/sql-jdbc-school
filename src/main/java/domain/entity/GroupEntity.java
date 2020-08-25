@@ -1,6 +1,6 @@
 package domain.entity;
 
-public class Group {
+public class GroupEntity {
     private int id;
     private String name;
 
@@ -17,7 +17,12 @@ public class Group {
         this.name = name;
     }
 
-    public Group( String name) {
+    public GroupEntity(String name) {
+        this.name = name;
+    }
+
+    public GroupEntity(int id, String name) {
+        this.id = id;
         this.name = name;
     }
 }

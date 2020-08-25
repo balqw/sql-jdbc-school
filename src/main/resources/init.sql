@@ -1,3 +1,4 @@
+drop table if exists  groups, students, course cascade;
 create table groups (
 group_id serial primary key,
 name varchar(100)

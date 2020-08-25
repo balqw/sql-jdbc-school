@@ -1,6 +1,3 @@
-package dao;
-
-
 import java.io.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -8,10 +5,10 @@ import java.sql.SQLException;
 
 import com.ibatis.common.jdbc.ScriptRunner;
 
-public class CreatorDB {
+public class InitialisationDB {
 
 
-    private final String sqlProperties = "src/main/resources/properties.sql";
+    private final String sqlProperties = "src/main/resources/init.sql";
     private final String url = "jdbc:postgresql://localhost/school_db";
     private final String login = "postgres";
     private final String password = "223311";
