@@ -1,4 +1,4 @@
-package domain.entity;
+package ua.com.foxminded.domain.entity;
 
 public class CourseEntity {
     private int id;

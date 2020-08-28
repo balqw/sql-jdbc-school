@@ -1,7 +1,9 @@
-import dao.postgre.GroupsDao;
-import dao.postgre.StudentsDao;
-import domain.entity.GroupEntity;
-import domain.entity.StudentEntity;
+package ua.com.foxminded.domain;
+
+import ua.com.foxminded.dao.GroupsDao;
+import ua.com.foxminded.dao.StudentsDao;
+import ua.com.foxminded.domain.entity.GroupEntity;
+import ua.com.foxminded.domain.entity.StudentEntity;
 
 import java.sql.SQLException;
 
@@ -33,7 +35,5 @@ public class MainApp {
         System.out.println(studentsDao.read());
         studentsDao.deleteById(3);
         System.out.println(studentsDao.read());
-
-
     }
 }
