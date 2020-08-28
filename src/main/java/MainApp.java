@@ -1,9 +1,10 @@
 import dao.postgre.GroupsDao;
 import dao.postgre.StudentsDao;
+import domain.entity.GroupEntity;
 import domain.entity.StudentEntity;
 
 import java.sql.SQLException;
-import java.util.List;
+
 
 public class MainApp {
     public static void main(String[] args) throws SQLException {
@@ -14,20 +15,25 @@ public class MainApp {
 
 */      StudentsDao studentsDao = new StudentsDao();
         GroupsDao groupsDao = new GroupsDao();
-        groupsDao.insert("math");
-        studentsDao.insert("vasya","petrov");
-        studentsDao.insert("vasya2","petrov2");
+        GroupEntity ge1 = new GroupEntity("rs-11");
+        System.out.println(groupsDao.insert(ge1));
+        GroupEntity ge2 = new GroupEntity("rt-12");
+        System.out.println(groupsDao.insert(ge2));
+        StudentEntity se1 = new StudentEntity(1,"Vasya","Petrov");
+        System.out.println(studentsDao.insert(se1));
+        StudentEntity se2 = new StudentEntity(1,"Sasha","Stepanov");
+        System.out.println(studentsDao.insert(se2));
+        StudentEntity se3 = new StudentEntity(2,"Lena","Penkova");
+        System.out.println(studentsDao.insert(se3));
+        studentsDao.delete(se1);
+        System.out.println("______");
+        System.out.println(studentsDao.read());
+        se2.setLast_name("new");
+        studentsDao.update(se2);
+        System.out.println(studentsDao.read());
+        studentsDao.deleteById(3);
+        System.out.println(studentsDao.read());
 
-        List<StudentEntity>list = studentsDao.read();
-
-        System.out.println(list);
-
-        studentsDao.update(1,"new","new");
-        list = studentsDao.read();
-        System.out.println(list);
-        studentsDao.delete(1);
-        list = studentsDao.read();
-        System.out.println(list);
 
     }
 }

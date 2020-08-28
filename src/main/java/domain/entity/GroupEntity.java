@@ -1,13 +1,16 @@
 package domain.entity;
 
 public class GroupEntity {
-    private int id;
+    private int group_id;
     private String name;
 
-    public int getId() {
-        return id;
+    public int getGroup_id() {
+        return group_id;
     }
 
+    public void setGroup_id(int group_id) {
+        this.group_id = group_id;
+    }
 
     public String getName() {
         return name;
@@ -22,7 +25,15 @@ public class GroupEntity {
     }
 
     public GroupEntity(int id, String name) {
-        this.id = id;
+        this.group_id = id;
         this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "GroupEntity{" +
+                "group_id=" + group_id +
+                ", name='" + name + '\'' +
+                '}';
     }
 }

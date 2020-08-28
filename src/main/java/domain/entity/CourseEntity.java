@@ -9,6 +9,15 @@ public class CourseEntity {
         return id;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public CourseEntity(int id, String name, String description) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+    }
 
     public String getName() {
         return name;

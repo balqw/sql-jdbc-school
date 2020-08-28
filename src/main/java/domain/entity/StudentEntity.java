@@ -1,16 +1,20 @@
 package domain.entity;
 
 public class StudentEntity {
-    private int id;
+    private int student_id;
     private int group_id ;
     private String first_name;
     private String last_name;
 
 
-    public int getId() {
-        return id;
+    public int getStudent_id() {
+        return student_id;
     }
 
+
+    public void setStudent_id(int student_id) {
+        this.student_id = student_id;
+    }
 
     public String getFirst_name() {
         return first_name;
@@ -46,8 +50,14 @@ public class StudentEntity {
         this.last_name = last_name;
     }
 
+    public StudentEntity(String first_name, String last_name) {
+
+        this.first_name = first_name;
+        this.last_name = last_name;
+    }
+
     public StudentEntity(int id, int group_id, String first_name, String last_name) {
-        this.id = id;
+        this.student_id = id;
         this.group_id = group_id;
         this.first_name = first_name;
         this.last_name = last_name;
@@ -55,11 +65,9 @@ public class StudentEntity {
 
     @Override
     public String toString() {
-        return "Student{" +
-                "id=" + id +
-                ", group_id=" + group_id +
-                ", first_name='" + first_name + '\'' +
-                ", last_name='" + last_name + '\'' +
-                '}';
+        return "id="+student_id+
+                ", group_id="+group_id+
+                ", first_name="+first_name+
+                ", last_name="+last_name+" ";
     }
 }

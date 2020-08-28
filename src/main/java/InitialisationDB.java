@@ -1,23 +1,20 @@
 import java.io.*;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
-
 import com.ibatis.common.jdbc.ScriptRunner;
+import dao.DBConnection;
 
 public class InitialisationDB {
 
+    DBConnection dbConnection = new DBConnection();
 
-    private final String sqlProperties = "src/main/resources/init.sql";
-    private final String url = "jdbc:postgresql://localhost/school_db";
-    private final String login = "postgres";
-    private final String password = "223311";
 
     public void creat() throws SQLException {
-
-        Connection connection = DriverManager.getConnection(url, login, password);
+        String sqlProperties = "src/main/resources/init.sql";
+        Connection connection = null;
 
         try {
+            connection = dbConnection.getConnection();
             ScriptRunner sr = new ScriptRunner(connection,false,false);
             Reader reader = new BufferedReader(
                     new FileReader(sqlProperties));
