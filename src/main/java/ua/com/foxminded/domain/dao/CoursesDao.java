@@ -1,6 +1,6 @@
-package ua.com.foxminded.dao;
+package ua.com.foxminded.domain.dao;
 
-import ua.com.foxminded.dao.config.DBConnection;
+import ua.com.foxminded.config.DBConnection;
 import ua.com.foxminded.domain.entity.CourseEntity;
 
 import java.sql.*;
@@ -9,11 +9,15 @@ import java.util.List;
 
 
 public class CoursesDao {
-    private DBConnection dbConnection = new DBConnection();
+    private final DBConnection dbConnection;
     private static final String ADD_QUERY = "insert into courses (course_name, course_description) values (?,?);";
     private static final String SELECT_QUERY = "select * from courses;";
     private static final String UPDATE_QUERY = "update from courses set course_name = ?, course_description = ? where group_id = ?";
     private static final String DELETE_QUERY= "delete from courses where course_id = ?";
+
+    public CoursesDao(DBConnection dbConnection) {
+        this.dbConnection = dbConnection;
+    }
 
     public CourseEntity insert(CourseEntity courseEntity){
         PreparedStatement statement = null;
