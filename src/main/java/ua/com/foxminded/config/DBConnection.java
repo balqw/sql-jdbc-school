@@ -28,7 +28,7 @@ public class DBConnection {
             String url = properties.getProperty(URL);
             String login = properties.getProperty(LOGIN);
             String password = properties.getProperty(PASSWORD);
-            Driver driver = new Driver();
+            
             return DriverManager.getConnection(url, login, password);
         } catch (Exception e) {
             throw new RuntimeException(String.format(ERR_MESSAGE, e.getLocalizedMessage()));
