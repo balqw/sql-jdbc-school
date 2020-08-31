@@ -34,7 +34,7 @@ public class StudentsDao implements CrudOperations<StudentEntity, Integer> {
             rs.next();
             studentEntity.setStudent_id(rs.getInt("student_id"));
         } catch (SQLException e) {
-            throw new RuntimeException("Insert student failed");
+            throw new RuntimeException("Create student failed");
         }
         return studentEntity;
     }
@@ -75,7 +75,7 @@ public class StudentsDao implements CrudOperations<StudentEntity, Integer> {
                 result.add(studentEntity);
             }
         } catch (SQLException e) {
-            throw new RuntimeException("Select student failed");
+            throw new RuntimeException("Read all students failed");
         }
         return result;
     }

@@ -2,6 +2,7 @@ package ua.com.foxminded.domain.dao;
 
 import ua.com.foxminded.config.DBConnection;
 import ua.com.foxminded.domain.entity.CourseEntity;
+import ua.com.foxminded.service.CourseService;
 
 import java.sql.*;
 import java.util.LinkedList;
@@ -9,39 +10,56 @@ import java.util.List;
 
 
 public class CoursesDao {
-    private final DBConnection dbConnection;
-    private static final String ADD_QUERY = "insert into courses (course_name, course_description) values (?,?);";
-    private static final String SELECT_QUERY = "select * from courses;";
-    private static final String UPDATE_QUERY = "update from courses set course_name = ?, course_description = ? where group_id = ?";
-    private static final String DELETE_QUERY= "delete from courses where course_id = ?";
-
+    private final DBConnection connection;
+    private static final String ADD_QUERY = "insert into groups(group_id) values (?);";
+    private static final String UPDATE_QUERY = "update groups set group_id=? where group_id=?;";
+    private static final String FIND_QUERY = "select * from groups WHERE group_id=?;";
+    private static final String DELETE_QUERY = "delete from groups where group_id=?;";
+    private static final String SELECT_QUERY = "select * from groups;";
     public CoursesDao(DBConnection dbConnection) {
-        this.dbConnection = dbConnection;
+        this.connection = dbConnection;
     }
 
-    public CourseEntity insert(CourseEntity courseEntity){
+    public CourseEntity create (CourseEntity courseEntity){
         PreparedStatement statement = null;
         ResultSet rs = null;
-        try(Connection connection = dbConnection.getConnection()) {
+        try(Connection connection = this.connection.getConnection()) {
             statement = connection.prepareStatement(ADD_QUERY, Statement.RETURN_GENERATED_KEYS);
             statement.setString(1,courseEntity.getName());
             statement.setString(2,courseEntity.getDescription());
             statement.execute();
             rs = statement.getGeneratedKeys();
             rs.next();
-            courseEntity.setId(rs.getInt("course_id"));
-
+            courseEntity.setId(rs.getInt(1));
+            return courseEntity;
         } catch (SQLException e) {
             throw new RuntimeException("Insert course failed");
         }
-        return courseEntity;
     }
 
-    public List<CourseEntity> read (){
+
+    public CourseEntity findById(Integer id){
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+        try(Connection connection = this.connection.getConnection()){
+            statement = connection.prepareStatement(FIND_QUERY);
+            statement.setInt(1,id);
+            statement.executeUpdate();
+            int course_id = rs.getInt(1);
+            String course_name = rs.getString(2);
+            String description = rs.getString(3);
+            return new CourseEntity(course_id,course_name,description);
+        }catch (SQLException e){
+            throw new RuntimeException("FindById course failed");
+        }
+    }
+
+
+    public List<CourseEntity> readAll(){
         List<CourseEntity>result = new LinkedList<>();
         PreparedStatement statement = null;
         ResultSet rs = null;
-        try(Connection connection = dbConnection.getConnection()) {
+        try(Connection connection = this.connection.getConnection()) {
             statement = connection.prepareStatement(SELECT_QUERY);
             rs = statement.executeQuery();
             while (rs.next()){
@@ -56,9 +74,10 @@ public class CoursesDao {
         return result;
     }
 
+
     public CourseEntity update (CourseEntity courseEntity){
         PreparedStatement statement = null;
-        try(Connection connection = dbConnection.getConnection()) {
+        try(Connection connection = this.connection.getConnection()) {
             statement = connection.prepareStatement(UPDATE_QUERY);
             statement.setString(1,courseEntity.getName());
             statement.setString(2,courseEntity.getDescription());
@@ -70,27 +89,16 @@ public class CoursesDao {
         return courseEntity;
     }
 
+
     public void deleteById(int id){
         PreparedStatement statement = null;
-        try(Connection connection = dbConnection.getConnection()) {
+        try(Connection connection = this.connection.getConnection()) {
             statement = connection.prepareStatement(DELETE_QUERY);
             statement.setInt(1,id);
             statement.executeUpdate();
 
         } catch (SQLException e) {
             throw new RuntimeException("DeleteById course failed");
-        }
-    }
-
-    public void delete(CourseEntity courseEntity){
-        PreparedStatement statement = null;
-        try(Connection connection = dbConnection.getConnection()) {
-            statement = connection.prepareStatement(DELETE_QUERY);
-            statement.setInt(1,courseEntity.getId());
-            statement.executeUpdate();
-
-        } catch (SQLException e) {
-            throw new RuntimeException("Delete course failed");
         }
     }
 

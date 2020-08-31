@@ -11,7 +11,6 @@ public class StudentEntity {
         return student_id;
     }
 
-
     public void setStudent_id(int student_id) {
         this.student_id = student_id;
     }
@@ -40,24 +39,7 @@ public class StudentEntity {
         this.group_id = group_id;
     }
 
-    public StudentEntity() {
-
-    }
-
     public StudentEntity(int group_id, String first_name, String last_name) {
-        this.group_id = group_id;
-        this.first_name = first_name;
-        this.last_name = last_name;
-    }
-
-    public StudentEntity(String first_name, String last_name) {
-
-        this.first_name = first_name;
-        this.last_name = last_name;
-    }
-
-    public StudentEntity(int id, int group_id, String first_name, String last_name) {
-        this.student_id = id;
         this.group_id = group_id;
         this.first_name = first_name;
         this.last_name = last_name;

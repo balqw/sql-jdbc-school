@@ -25,7 +25,6 @@ public class GroupEntity {
     }
 
     public GroupEntity(int id, String name) {
-        this.group_id = id;
         this.name = name;
     }
 

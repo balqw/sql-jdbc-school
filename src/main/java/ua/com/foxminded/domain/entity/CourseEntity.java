@@ -13,12 +13,6 @@ public class CourseEntity {
         this.id = id;
     }
 
-    public CourseEntity(int id, String name, String description) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-    }
-
     public String getName() {
         return name;
     }
@@ -35,7 +29,7 @@ public class CourseEntity {
         this.description = description;
     }
 
-    public CourseEntity(String name, String description) {
+    public CourseEntity(int id, String name, String description) {
         this.name = name;
         this.description = description;
     }

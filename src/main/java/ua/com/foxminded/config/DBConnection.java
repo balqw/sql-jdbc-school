@@ -16,9 +16,9 @@ public class DBConnection {
     private final String PASSWORD;
 
     public DBConnection(String dbPrefix) {
-        URL = dbPrefix + "url";
-        LOGIN = dbPrefix + "login";
-        PASSWORD = dbPrefix + "password";
+        URL = dbPrefix + ".url";
+        LOGIN = dbPrefix + ".login";
+        PASSWORD = dbPrefix + ".password";
     }
 
     public Connection getConnection() {

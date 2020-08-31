@@ -8,21 +8,21 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class GroupsDao {
-    private static final String UPDATE_QUERY = "update from groups set name = ? where group_id = ?";
-    private static final String DELETE_QUERY = "delete from groups where group_id = ?;";
-    private static final String ADD_QUERY = "insert into groups(name) values (?);";
-    private static final String SELECT_QUERY = "select * from groups;";
-
-    private final DBConnection dbConnection;
+    private static final String ADD_QUERY = "insert into courses(course_name, course_description ) values (?,?);";
+    private static final String UPDATE_QUERY = "update courses set course_name=?, course_description = ? where course_id=?;";
+    private static final String FIND_QUERY = "select * from courses WHERE course_id=?;";
+    private static final String DELETE_QUERY = "delete from courses where course_id=?;";
+    private static final String SELECT_QUERY = "select * from courses;";
+    private final DBConnection connection;
 
     public GroupsDao(DBConnection dbConnection) {
-        this.dbConnection = dbConnection;
+        this.connection = dbConnection;
     }
 
-    public GroupEntity insert(GroupEntity groupEntity) {
+    public GroupEntity create (GroupEntity groupEntity) {
         PreparedStatement statement = null;
         ResultSet rs = null;
-        try (Connection connection = dbConnection.getConnection()) {
+        try (Connection connection = this.connection.getConnection()) {
             statement = connection.prepareStatement(ADD_QUERY, Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, groupEntity.getName());
             statement.execute();
@@ -30,68 +30,69 @@ public class GroupsDao {
             rs.next();
             groupEntity.setGroup_id(rs.getInt("group_id"));
         } catch (SQLException e) {
-            throw new RuntimeException("Insert group failed");
+            throw new RuntimeException("Create group failed");
         }
         return groupEntity;
     }
 
 
-    public List<GroupEntity> read() {
-        List<GroupEntity> result = new LinkedList<>();
+    public GroupEntity findById(Integer id) {
         PreparedStatement statement = null;
         ResultSet rs = null;
-        try (Connection connection = dbConnection.getConnection();) {
+        try (Connection connection = this.connection.getConnection();) {
+            statement = connection.prepareStatement(FIND_QUERY);
+            rs = statement.executeQuery();
+            int group_id = rs.getInt(1);
+            String name = rs.getString(2);
+            return new GroupEntity(group_id,name);
+        } catch (SQLException e) {
+            throw new RuntimeException("Find group failed");
+        }
+    }
+
+
+    public List<GroupEntity> readAll(){
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+        List<GroupEntity>groupEntities = new LinkedList<>();
+        try (Connection connection = this.connection.getConnection()){
             statement = connection.prepareStatement(SELECT_QUERY);
             rs = statement.executeQuery();
-            while (rs.next()) {
-                int id = rs.getInt("group_id");
-                String name = rs.getString("name");
-                result.add(new GroupEntity(id, name));
+            while(rs.next()){
+                int group_id = rs.getInt(1);
+                String name = rs.getString(2);
+                groupEntities.add(new GroupEntity(group_id,name));
             }
 
-        } catch (SQLException e) {
-            throw new RuntimeException("Select group failed");
+        } catch (Exception e) {
+            throw new RuntimeException("Read all groups failed");
         }
-        return result;
+        return groupEntities;
     }
 
 
     public GroupEntity update(GroupEntity groupEntity) {
         PreparedStatement statement = null;
-        try (Connection connection = dbConnection.getConnection()) {
+        try (Connection connection = this.connection.getConnection()) {
             statement = connection.prepareStatement(UPDATE_QUERY);
             statement.setString(1, groupEntity.getName());
             statement.setInt(2, groupEntity.getGroup_id());
             statement.executeUpdate();
-
         } catch (SQLException e) {
             throw new RuntimeException("Update group failed");
         }
         return groupEntity;
     }
 
-    public void deleteByID(int id) {
+
+    public void deleteByID(Integer id) {
         PreparedStatement statement = null;
-        try (Connection connection = dbConnection.getConnection()) {
+        try (Connection connection = this.connection.getConnection()) {
             statement = connection.prepareStatement(DELETE_QUERY);
             statement.setInt(1, id);
             statement.executeUpdate();
-
         } catch (SQLException e) {
             throw new RuntimeException("DeleteById group failed");
-        }
-    }
-
-
-    public void delete(GroupEntity groupEntity) {
-        PreparedStatement statement = null;
-        try (Connection connection = dbConnection.getConnection()) {
-            statement = connection.prepareStatement(DELETE_QUERY);
-            statement.setInt(1, groupEntity.getGroup_id());
-            statement.executeUpdate();
-
-        } catch (SQLException e) {
-            throw new RuntimeException("Delete group failed");
         }
     }
 
