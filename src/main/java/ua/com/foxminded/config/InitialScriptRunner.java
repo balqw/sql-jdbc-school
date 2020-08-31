@@ -19,9 +19,7 @@ public class InitialScriptRunner {
     }
 
 
-    public void creat() {
-        String sqlProperties = "src/main/resources/init.sql";
-
+    public void creat(String sqlProperties) {
         try (Connection connection = dbConnection.getConnection()) {
 
             ScriptRunner sr = new ScriptRunner(connection);

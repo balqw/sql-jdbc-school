@@ -1,10 +1,10 @@
 package ua.com.foxminded.config;
 
+import org.h2.Driver;
+
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.util.Properties;
 
 public class DBConnection {
@@ -23,15 +23,15 @@ public class DBConnection {
 
     public Connection getConnection() {
         try (FileInputStream fis = new FileInputStream(PROPERTY_SOURCE)) {
+
             properties.load(fis);
             String url = properties.getProperty(URL);
             String login = properties.getProperty(LOGIN);
             String password = properties.getProperty(PASSWORD);
-
+            Driver driver = new Driver();
             return DriverManager.getConnection(url, login, password);
-        } catch (IOException | SQLException | RuntimeException e) {
-            throw new RuntimeException(String.format(ERR_MESSAGE, e.getCause()));
+        } catch (Exception e) {
+            throw new RuntimeException(String.format(ERR_MESSAGE, e.getLocalizedMessage()));
         }
     }
-
 }

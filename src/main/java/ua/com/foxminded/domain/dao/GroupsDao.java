@@ -31,7 +31,7 @@ public class GroupsDao {
             rs.next();
             groupEntity.setGroup_id(rs.getInt(1));
         } catch (SQLException e) {
-            throw new RuntimeException("Create group failed");
+            throw new RuntimeException("Create group failed: " + e.getLocalizedMessage());
         }
         return groupEntity;
     }

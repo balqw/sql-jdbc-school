@@ -34,7 +34,7 @@ public class StudentsDao implements CrudOperations<StudentEntity, Integer> {
             rs.next();
             studentEntity.setStudent_id(rs.getInt("student_id"));
         } catch (SQLException e) {
-            throw new RuntimeException("Create student failed");
+            throw new RuntimeException("Create student failed: " + e.getLocalizedMessage());
         }
         return studentEntity;
     }

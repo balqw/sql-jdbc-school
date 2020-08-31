@@ -1,44 +1,33 @@
 package ua.com.foxminded;
 
-import com.sun.xml.internal.ws.api.model.wsdl.WSDLOutput;
-import ua.com.foxminded.config.DBConnection;
+import ua.com.foxminded.config.Context;
 import ua.com.foxminded.config.InitialScriptRunner;
 import ua.com.foxminded.domain.dao.GroupsDao;
 import ua.com.foxminded.domain.dao.StudentsDao;
-import ua.com.foxminded.domain.entity.GroupEntity;
-import ua.com.foxminded.domain.entity.StudentEntity;
-import ua.com.foxminded.service.DBService;
-import ua.com.foxminded.service.DataTest;
+import ua.com.foxminded.service.DataGenerator;
 import ua.com.foxminded.service.GroupService;
 import ua.com.foxminded.service.StudentService;
+import ua.com.foxminded.service.UIService;
 
-import java.time.format.DateTimeFormatter;
-import java.util.List;
-
+import static ua.com.foxminded.config.Context.H2;
 
 public class MainApp {
     public static void main(String[] args) {
-        DBConnection postgresConnection = new DBConnection("postgres");
-        InitialScriptRunner creatorDB = new InitialScriptRunner(postgresConnection);
-        DBService dbService = new DBService();
-        creatorDB.creat();
-        //dbService.selectOperation();
-        StudentsDao studentsDao = new StudentsDao(postgresConnection);
-        StudentService studentService = new StudentService(studentsDao);
-        GroupsDao groupsDao = new GroupsDao(postgresConnection);
-        GroupService groupService = new GroupService(groupsDao);
-        DataTest dataTest = new DataTest();
-        dataTest.generatedGroup();
-        dataTest.generatedCourses();
-        dataTest.generatedStudent();
+        Context context = Context.connectorTypeBuilder(H2);
+        InitialScriptRunner creatorDB = context.getInitialScriptRunner();
+        creatorDB.creat("src/main/resources/init.sql");
 
+        DataGenerator dataGenerator = context.getDataGenerator();
+        dataGenerator.generateGroups();
+        dataGenerator.generateCourses();
+        dataGenerator.generateStudents();
 
-
-
-
-
-
-
+        UIService dbService = context.getUiService();
+        dbService.selectOperation();
+        StudentService studentService = context.getStudentService();
+        GroupService groupService = context.getGroupService();
+        StudentsDao studentsDao = context.getStudentsDao();
+        GroupsDao groupsDao = context.getGroupsDao();
 
     }
 }
