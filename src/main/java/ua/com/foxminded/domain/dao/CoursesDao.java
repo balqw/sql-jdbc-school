@@ -11,11 +11,14 @@ import java.util.List;
 
 public class CoursesDao {
     private final DBConnection connection;
-    private static final String ADD_QUERY = "insert into groups(group_id) values (?);";
-    private static final String UPDATE_QUERY = "update groups set group_id=? where group_id=?;";
-    private static final String FIND_QUERY = "select * from groups WHERE group_id=?;";
-    private static final String DELETE_QUERY = "delete from groups where group_id=?;";
-    private static final String SELECT_QUERY = "select * from groups;";
+
+
+
+    private static final String ADD_QUERY = "insert into groups(course_name, course_description ) values (?,?);";
+    private static final String UPDATE_QUERY = "update courses set course_name=?, course_description = ? where course_id=?;";
+    private static final String FIND_QUERY = "select * from courses WHERE course_id=?;";
+    private static final String DELETE_QUERY = "delete from courses where course_id=?;";
+    private static final String SELECT_QUERY = "select * from courses;";
     public CoursesDao(DBConnection dbConnection) {
         this.connection = dbConnection;
     }

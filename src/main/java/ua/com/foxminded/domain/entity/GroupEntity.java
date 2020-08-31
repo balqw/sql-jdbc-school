@@ -28,6 +28,7 @@ public class GroupEntity {
         this.name = name;
     }
 
+
     @Override
     public String toString() {
         return "GroupEntity{" +

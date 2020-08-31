@@ -45,6 +45,13 @@ public class StudentEntity {
         this.last_name = last_name;
     }
 
+    public StudentEntity(int student_id, int group_id, String first_name, String last_name) {
+        this.student_id = student_id;
+        this.group_id = group_id;
+        this.first_name = first_name;
+        this.last_name = last_name;
+    }
+
     @Override
     public String toString() {
         return "id="+student_id+

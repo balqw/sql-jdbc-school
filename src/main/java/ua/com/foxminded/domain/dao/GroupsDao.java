@@ -8,11 +8,12 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class GroupsDao {
-    private static final String ADD_QUERY = "insert into courses(course_name, course_description ) values (?,?);";
-    private static final String UPDATE_QUERY = "update courses set course_name=?, course_description = ? where course_id=?;";
-    private static final String FIND_QUERY = "select * from courses WHERE course_id=?;";
-    private static final String DELETE_QUERY = "delete from courses where course_id=?;";
-    private static final String SELECT_QUERY = "select * from courses;";
+    private static final String ADD_QUERY = "insert into groups(name) values (?);";
+    private static final String UPDATE_QUERY = "update groups set group_id=? where group_id=?;";
+    private static final String FIND_QUERY = "select * from groups WHERE group_id=?;";
+    private static final String DELETE_QUERY = "delete from groups where group_id=?;";
+    private static final String SELECT_QUERY = "select * from groups;";
+
     private final DBConnection connection;
 
     public GroupsDao(DBConnection dbConnection) {
@@ -28,7 +29,7 @@ public class GroupsDao {
             statement.execute();
             rs = statement.getGeneratedKeys();
             rs.next();
-            groupEntity.setGroup_id(rs.getInt("group_id"));
+            groupEntity.setGroup_id(rs.getInt(1));
         } catch (SQLException e) {
             throw new RuntimeException("Create group failed");
         }
