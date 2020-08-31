@@ -8,9 +8,11 @@ import ua.com.foxminded.domain.dao.StudentsDao;
 import ua.com.foxminded.domain.entity.GroupEntity;
 import ua.com.foxminded.domain.entity.StudentEntity;
 import ua.com.foxminded.service.DBService;
+import ua.com.foxminded.service.DataTest;
 import ua.com.foxminded.service.GroupService;
 import ua.com.foxminded.service.StudentService;
 
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 
@@ -25,9 +27,13 @@ public class MainApp {
         StudentService studentService = new StudentService(studentsDao);
         GroupsDao groupsDao = new GroupsDao(postgresConnection);
         GroupService groupService = new GroupService(groupsDao);
+        DataTest dataTest = new DataTest();
+        dataTest.generatedGroup();
+        dataTest.generatedCourses();
+        dataTest.generatedStudent();
 
-        groupService.create(new GroupEntity("rs11"));
-        System.out.println(studentService.create(new StudentEntity(1,"dsd","asd")));
+
+
 
 
 

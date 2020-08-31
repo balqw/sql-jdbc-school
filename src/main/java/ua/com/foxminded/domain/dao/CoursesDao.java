@@ -14,7 +14,7 @@ public class CoursesDao {
 
 
 
-    private static final String ADD_QUERY = "insert into groups(course_name, course_description ) values (?,?);";
+    private static final String ADD_QUERY = "insert into courses(course_name, course_description ) values (?,?);";
     private static final String UPDATE_QUERY = "update courses set course_name=?, course_description = ? where course_id=?;";
     private static final String FIND_QUERY = "select * from courses WHERE course_id=?;";
     private static final String DELETE_QUERY = "delete from courses where course_id=?;";
