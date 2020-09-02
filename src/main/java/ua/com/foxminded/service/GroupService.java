@@ -37,7 +37,7 @@ public class GroupService implements CrudOperations<GroupEntity,Integer> {
     public void delete(Integer entity) {
 
     }
-    public String findGroupEqualsStudentCount(int count){return service.findGroupEqualsStudentCount(count);}
+    public List<GroupEntity> findGroupEqualsStudentCount(int count){return service.findGroupEqualsStudentCount(count);}
 
 
 }

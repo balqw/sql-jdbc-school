@@ -62,6 +62,6 @@ public class StudentEntity {
         return "id="+student_id+
                 ", group_id="+group_id+
                 ", first_name="+first_name+
-                ", last_name="+last_name+" ";
+                ", last_name="+last_name+" "+"\n";
     }
 }

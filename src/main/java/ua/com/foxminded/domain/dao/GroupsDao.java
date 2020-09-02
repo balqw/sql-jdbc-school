@@ -2,8 +2,10 @@ package ua.com.foxminded.domain.dao;
 
 import ua.com.foxminded.config.DBConnection;
 import ua.com.foxminded.domain.entity.GroupEntity;
+import ua.com.foxminded.domain.entity.StudentEntity;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -104,10 +106,11 @@ public class GroupsDao {
     }
 
 
-    public String findGroupEqualsStudentCount(int count){
+    public List<GroupEntity> findGroupEqualsStudentCount(int count){
+        List<GroupEntity>resultGroups = new ArrayList<>();
         PreparedStatement statement;
         ResultSet rs;
-        StringBuilder sb = new StringBuilder();
+
 
         try(Connection connection = this.connection.getConnection()){
             statement = connection.prepareStatement(SELECT_BY_COUNT_GROUP);
@@ -116,13 +119,13 @@ public class GroupsDao {
             while(rs.next()){
                 String name = rs.getString(1);
                 Integer sum = rs.getInt(2);
-                sb.append(name).append(" ").append(sum).append("\n");
+                resultGroups.add(new GroupEntity(name));
             }
         }catch (SQLException e){
             throw new RuntimeException("getSelectByCountGroup failed "+ e.getLocalizedMessage());
         }
 
-        return sb.toString();
+        return resultGroups;
     }
 
 

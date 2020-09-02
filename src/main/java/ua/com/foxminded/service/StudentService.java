@@ -2,6 +2,7 @@ package ua.com.foxminded.service;
 
 import ua.com.foxminded.domain.CrudOperations;
 import ua.com.foxminded.domain.dao.StudentsDao;
+import ua.com.foxminded.domain.entity.CourseEntity;
 import ua.com.foxminded.domain.entity.StudentEntity;
 
 import java.util.List;
@@ -42,6 +43,6 @@ public class StudentService implements CrudOperations<StudentEntity, Integer> {
         service.additionCourse(idStudent, idCourse);
     }
 
-    public String searchByCourse(String course){return service.searchStudentByCourse(course);}
+    public List<StudentEntity> searchByCourse(String course){return service.searchStudentByCourse(course);}
 
 }

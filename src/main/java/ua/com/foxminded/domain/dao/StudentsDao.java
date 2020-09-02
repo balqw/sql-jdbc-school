@@ -5,8 +5,7 @@ import ua.com.foxminded.domain.CrudOperations;
 import ua.com.foxminded.domain.entity.StudentEntity;
 
 import java.sql.*;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 public class StudentsDao implements CrudOperations<StudentEntity, Integer> {
     private static final String UPDATE_QUERY = "update students set first_name=?,last_name=?,group_id=? where student_id=?;";
@@ -134,23 +133,24 @@ public class StudentsDao implements CrudOperations<StudentEntity, Integer> {
     }
 
 
-    public String searchStudentByCourse(String course){
+    public List<StudentEntity> searchStudentByCourse(String course){
+        List<StudentEntity>resultStudents = new ArrayList<>();
         PreparedStatement statement;
         ResultSet rs ;
-        StringBuilder sb = new StringBuilder();
+
         try(Connection connection = this.connection.getConnection()){
             statement = connection.prepareStatement(FIND_BY_COURSE);
             statement.setString(1,course);
             rs = statement.executeQuery();
             while(rs.next()){
-               String name = rs.getString(1);
-               String last_name = rs.getString(2);
-               sb.append(name).append(" ").append(last_name).append("\n");
+               String firstName = rs.getString(1);
+               String lastName = rs.getString(2);
+                resultStudents.add(new StudentEntity(firstName,lastName));
             }
         }catch (SQLException e){
             throw new RuntimeException("searchStudentByCourse failed "+e.getLocalizedMessage());
         }
-        return sb.toString();
+        return resultStudents;
     }
 
 }

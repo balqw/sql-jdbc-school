@@ -25,11 +25,7 @@ public class MainApp {
         dataGenerator.generatedStudentCourse();
 
         UIService dbService = context.getUiService();
-        dbService.selectOperation();
-        StudentService studentService = context.getStudentService();
-        GroupService groupService = context.getGroupService();
-        StudentsDao studentsDao = context.getStudentsDao();
-        GroupsDao groupsDao = context.getGroupsDao();
+
         dbService.selectOperation();
     }
 }
