@@ -12,4 +12,6 @@ public interface CrudOperations<T, ID> { // ToDo: implement in all CRUD based cl
     T update(T entity);
 
     void delete(ID entity);
+
+
 }

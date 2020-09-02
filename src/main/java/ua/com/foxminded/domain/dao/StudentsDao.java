@@ -14,6 +14,16 @@ public class StudentsDao implements CrudOperations<StudentEntity, Integer> {
     private static final String FIND_QUERY = "select * from students WHERE students_id=?;";
     private static final String DELETE_QUERY = "delete from students where student_id=?;";
     private static final String SELECT_QUERY = "select * from students;";
+    private static final String ADD_COURSE = "insert into student_course (student_id, course_id) values(?,?);";
+    private static final String FIND_BY_COURSE = "select first_name, last_name from students "
+    +"inner join student_course "
+    +"on students.student_id = student_course.student_id "
+    +"inner join courses "
+    +"on courses.course_id = student_course.course_id "
+    +"where courses.course_name = ?;";
+
+
+
 
     private final DBConnection connection;
 
@@ -106,6 +116,41 @@ public class StudentsDao implements CrudOperations<StudentEntity, Integer> {
         } catch (SQLException e) {
             throw new RuntimeException("Delete student failed");
         }
+    }
+
+
+    public void additionCourse(int idStudent, int idCourse ){
+        PreparedStatement statement = null;
+        try(Connection connection = this.connection.getConnection()){
+            statement = connection.prepareStatement(ADD_COURSE);
+            statement.setInt(1,idStudent);
+            statement.setInt(2,idCourse);
+            statement.execute();
+
+        }catch (SQLException e){
+            throw new RuntimeException("additionCourse failed "+e.getLocalizedMessage());
+        }
+
+    }
+
+
+    public String searchStudentByCourse(String course){
+        PreparedStatement statement;
+        ResultSet rs ;
+        StringBuilder sb = new StringBuilder();
+        try(Connection connection = this.connection.getConnection()){
+            statement = connection.prepareStatement(FIND_BY_COURSE);
+            statement.setString(1,course);
+            rs = statement.executeQuery();
+            while(rs.next()){
+               String name = rs.getString(1);
+               String last_name = rs.getString(2);
+               sb.append(name).append(" ").append(last_name).append("\n");
+            }
+        }catch (SQLException e){
+            throw new RuntimeException("searchStudentByCourse failed "+e.getLocalizedMessage());
+        }
+        return sb.toString();
     }
 
 }

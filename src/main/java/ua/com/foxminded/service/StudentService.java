@@ -38,5 +38,10 @@ public class StudentService implements CrudOperations<StudentEntity, Integer> {
         service.delete(id);
     }
 
+    public void addCourse(int idStudent, int idCourse) {
+        service.additionCourse(idStudent, idCourse);
+    }
+
+    public String searchByCourse(String course){return service.searchStudentByCourse(course);}
 
 }

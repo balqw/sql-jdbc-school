@@ -9,7 +9,6 @@ import java.util.List;
 public class GroupService implements CrudOperations<GroupEntity,Integer> {
     private final GroupsDao service;
 
-
     public GroupService(GroupsDao service) {
         this.service = service;
     }
@@ -38,4 +37,7 @@ public class GroupService implements CrudOperations<GroupEntity,Integer> {
     public void delete(Integer entity) {
 
     }
+    public String findGroupEqualsStudentCount(int count){return service.findGroupEqualsStudentCount(count);}
+
+
 }

@@ -30,15 +30,20 @@ public class UIService {
         Scanner scanner = new Scanner(System.in);
         String input = scanner.nextLine();
         if (input.equalsIgnoreCase("a")) {
+            System.out.println("Please enter number of students:");
+            int numberOfStudents = Integer.parseInt(scanner.nextLine());
+            System.out.println(groupService.findGroupEqualsStudentCount(numberOfStudents));
 
         } else if (input.equalsIgnoreCase("b")) {
-
+            System.out.println("Please write course");
+            String course = scanner.nextLine();
+            System.out.println(studentService.searchByCourse(course));
         } else if (input.equalsIgnoreCase("c")) {
-            System.out.println("Please write student name");
+            System.out.println("Please write student name:");
             String firstName = scanner.nextLine();
-            System.out.println("Please write student last name");
+            System.out.println("Please write student last name:");
             String lastName = scanner.nextLine();
-            System.out.println("Please write student group_id");
+            System.out.println("Please write student group_id(1-10):");
             int groupId = Integer.parseInt(scanner.nextLine());
             studentService.create(new StudentEntity(groupId, firstName, lastName));
 

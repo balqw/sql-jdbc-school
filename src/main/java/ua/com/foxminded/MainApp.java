@@ -10,10 +10,11 @@ import ua.com.foxminded.service.StudentService;
 import ua.com.foxminded.service.UIService;
 
 import static ua.com.foxminded.config.Context.H2;
+import static ua.com.foxminded.config.Context.POSTGRES;
 
 public class MainApp {
     public static void main(String[] args) {
-        Context context = Context.connectorTypeBuilder(H2);
+        Context context = Context.connectorTypeBuilder(POSTGRES);
         InitialScriptRunner creatorDB = context.getInitialScriptRunner();
         creatorDB.creat("src/main/resources/init.sql");
 
@@ -21,6 +22,7 @@ public class MainApp {
         dataGenerator.generateGroups();
         dataGenerator.generateCourses();
         dataGenerator.generateStudents();
+        dataGenerator.generatedStudentCourse();
 
         UIService dbService = context.getUiService();
         dbService.selectOperation();
@@ -28,6 +30,6 @@ public class MainApp {
         GroupService groupService = context.getGroupService();
         StudentsDao studentsDao = context.getStudentsDao();
         GroupsDao groupsDao = context.getGroupsDao();
-
+        dbService.selectOperation();
     }
 }

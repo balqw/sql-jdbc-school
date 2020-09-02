@@ -13,6 +13,12 @@ public class GroupsDao {
     private static final String FIND_QUERY = "select * from groups WHERE group_id=?;";
     private static final String DELETE_QUERY = "delete from groups where group_id=?;";
     private static final String SELECT_QUERY = "select * from groups;";
+    private static final String SELECT_BY_COUNT_GROUP = "select g.name , count(s.group_id) " +
+            "from groups as g " +
+            "inner join students as s " +
+            "on g.group_id = s.group_id " +
+            "group by g.name " +
+            "having count(*)<=?;";
 
     private final DBConnection connection;
 
@@ -95,6 +101,28 @@ public class GroupsDao {
         } catch (SQLException e) {
             throw new RuntimeException("DeleteById group failed");
         }
+    }
+
+
+    public String findGroupEqualsStudentCount(int count){
+        PreparedStatement statement;
+        ResultSet rs;
+        StringBuilder sb = new StringBuilder();
+
+        try(Connection connection = this.connection.getConnection()){
+            statement = connection.prepareStatement(SELECT_BY_COUNT_GROUP);
+            statement.setInt(1,count);
+            rs = statement.executeQuery();
+            while(rs.next()){
+                String name = rs.getString(1);
+                Integer sum = rs.getInt(2);
+                sb.append(name).append(" ").append(sum).append("\n");
+            }
+        }catch (SQLException e){
+            throw new RuntimeException("getSelectByCountGroup failed "+ e.getLocalizedMessage());
+        }
+
+        return sb.toString();
     }
 
 

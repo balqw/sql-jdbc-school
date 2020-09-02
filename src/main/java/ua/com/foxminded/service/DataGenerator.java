@@ -1,6 +1,7 @@
 package ua.com.foxminded.service;
 
 import com.github.javafaker.Faker;
+import ua.com.foxminded.domain.dao.StudentsDao;
 import ua.com.foxminded.domain.entity.CourseEntity;
 import ua.com.foxminded.domain.entity.GroupEntity;
 import ua.com.foxminded.domain.entity.StudentEntity;
@@ -18,12 +19,25 @@ public class DataGenerator {
         this.faker = faker;
     }
 
+
     public void generateGroups() {
         String name = "gp-";
         for (int i = 0; i < 10; i++) {
             groupService.create(new GroupEntity(name + (i + 1)));
         }
     }
+
+    public void generatedStudentCourse(){
+
+        for(int i= 1;i<=200;i++){
+            int randomCount =1+ (int) (Math.random() * 3);
+            for(int j = 0; j < randomCount;j++) {
+                int randomCourse = 1 + (int) (Math.random() * 10);
+                studentService.addCourse(i, randomCourse);
+            }
+        }
+    }
+
 
     public void generateCourses() {
         courseService.create(new CourseEntity("math", "math course"));
@@ -38,12 +52,13 @@ public class DataGenerator {
         courseService.create(new CourseEntity("science", "science course"));
     }
 
+
     public void generateStudents() {
         for (int i = 0; i < 200; i++) {
             String firstName = faker.name().firstName();
             String lastName = faker.name().lastName();
-            int groupId = 1 + (int) (Math.random() * 3);
-            studentService.create(new StudentEntity(groupId, firstName, lastName));
+            int groupId = 1 + (int) (Math.random() * 10);
+            studentService.create(new StudentEntity(groupId,firstName, lastName));
         }
     }
 }
