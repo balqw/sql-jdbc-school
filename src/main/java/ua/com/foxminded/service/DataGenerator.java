@@ -19,7 +19,6 @@ public class DataGenerator {
         this.faker = faker;
     }
 
-
     public void generateGroups() {
         String name = "gp-";
         for (int i = 0; i < 10; i++) {

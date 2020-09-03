@@ -15,11 +15,11 @@ public class GroupsDao {
     private static final String FIND_QUERY = "select * from groups WHERE group_id=?;";
     private static final String DELETE_QUERY = "delete from groups where group_id=?;";
     private static final String SELECT_QUERY = "select * from groups;";
-    private static final String SELECT_BY_COUNT_GROUP = "select g.name , count(s.group_id) " +
+    private static final String SELECT_BY_COUNT_GROUP = "select g.group_id, g.name , count(s.group_id) " +
             "from groups as g " +
             "inner join students as s " +
             "on g.group_id = s.group_id " +
-            "group by g.name " +
+            "group by g.group_id " +
             "having count(*)<=?;";
 
     private final DBConnection connection;
@@ -29,13 +29,11 @@ public class GroupsDao {
     }
 
     public GroupEntity create (GroupEntity groupEntity) {
-        PreparedStatement statement = null;
-        ResultSet rs = null;
         try (Connection connection = this.connection.getConnection()) {
-            statement = connection.prepareStatement(ADD_QUERY, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement statement = connection.prepareStatement(ADD_QUERY, Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, groupEntity.getName());
             statement.execute();
-            rs = statement.getGeneratedKeys();
+            ResultSet rs = statement.getGeneratedKeys();
             rs.next();
             groupEntity.setGroup_id(rs.getInt(1));
         } catch (SQLException e) {
@@ -46,11 +44,9 @@ public class GroupsDao {
 
 
     public GroupEntity findById(Integer id) {
-        PreparedStatement statement = null;
-        ResultSet rs = null;
         try (Connection connection = this.connection.getConnection();) {
-            statement = connection.prepareStatement(FIND_QUERY);
-            rs = statement.executeQuery();
+            PreparedStatement statement = connection.prepareStatement(FIND_QUERY);
+            ResultSet rs = statement.executeQuery();
             int group_id = rs.getInt(1);
             String name = rs.getString(2);
             return new GroupEntity(group_id,name);
@@ -61,18 +57,15 @@ public class GroupsDao {
 
 
     public List<GroupEntity> readAll(){
-        PreparedStatement statement = null;
-        ResultSet rs = null;
         List<GroupEntity>groupEntities = new LinkedList<>();
         try (Connection connection = this.connection.getConnection()){
-            statement = connection.prepareStatement(SELECT_QUERY);
-            rs = statement.executeQuery();
+            PreparedStatement statement = connection.prepareStatement(SELECT_QUERY);
+            ResultSet rs = statement.executeQuery();
             while(rs.next()){
                 int group_id = rs.getInt(1);
                 String name = rs.getString(2);
                 groupEntities.add(new GroupEntity(group_id,name));
             }
-
         } catch (Exception e) {
             throw new RuntimeException("Read all groups failed");
         }
@@ -81,9 +74,8 @@ public class GroupsDao {
 
 
     public GroupEntity update(GroupEntity groupEntity) {
-        PreparedStatement statement = null;
         try (Connection connection = this.connection.getConnection()) {
-            statement = connection.prepareStatement(UPDATE_QUERY);
+            PreparedStatement statement = connection.prepareStatement(UPDATE_QUERY);
             statement.setString(1, groupEntity.getName());
             statement.setInt(2, groupEntity.getGroup_id());
             statement.executeUpdate();
@@ -95,9 +87,8 @@ public class GroupsDao {
 
 
     public void deleteByID(Integer id) {
-        PreparedStatement statement = null;
         try (Connection connection = this.connection.getConnection()) {
-            statement = connection.prepareStatement(DELETE_QUERY);
+            PreparedStatement statement = connection.prepareStatement(DELETE_QUERY);
             statement.setInt(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -108,23 +99,18 @@ public class GroupsDao {
 
     public List<GroupEntity> findGroupEqualsStudentCount(int count){
         List<GroupEntity>resultGroups = new ArrayList<>();
-        PreparedStatement statement;
-        ResultSet rs;
-
-
         try(Connection connection = this.connection.getConnection()){
-            statement = connection.prepareStatement(SELECT_BY_COUNT_GROUP);
+            PreparedStatement statement = connection.prepareStatement(SELECT_BY_COUNT_GROUP);
             statement.setInt(1,count);
-            rs = statement.executeQuery();
+            ResultSet rs = statement.executeQuery();
             while(rs.next()){
-                String name = rs.getString(1);
-                Integer sum = rs.getInt(2);
-                resultGroups.add(new GroupEntity(name));
+                int groupId = rs.getInt(1);
+                String name = rs.getString(2);
+                resultGroups.add(new GroupEntity(groupId,name));
             }
         }catch (SQLException e){
             throw new RuntimeException("getSelectByCountGroup failed "+ e.getLocalizedMessage());
         }
-
         return resultGroups;
     }
 

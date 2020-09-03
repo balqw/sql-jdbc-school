@@ -7,7 +7,7 @@ import ua.com.foxminded.domain.entity.CourseEntity;
 
 import java.util.List;
 
-public class CourseService implements CrudOperations<CourseEntity,Integer> {
+public class CourseService implements CrudOperations<CourseEntity,Integer>{
 
     private final CoursesDao service;
 
@@ -40,4 +40,9 @@ public class CourseService implements CrudOperations<CourseEntity,Integer> {
     public void delete(Integer entity) {
         service.deleteById(entity);
     }
+
+    public void addCourseToStudent(int idStudent,int idCourse){service.addCourseToStudent(idStudent, idCourse);}
+
+    public void deleteCourseFromStudent(int idStudent,int idCourse){service.deleteCourseFromStudent(idStudent, idCourse);}
+
 }

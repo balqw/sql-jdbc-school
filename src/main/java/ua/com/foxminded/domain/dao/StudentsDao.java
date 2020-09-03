@@ -22,8 +22,6 @@ public class StudentsDao implements CrudOperations<StudentEntity, Integer> {
     +"where courses.course_name = ?;";
 
 
-
-
     private final DBConnection connection;
 
     public StudentsDao(DBConnection connection) {
@@ -31,15 +29,13 @@ public class StudentsDao implements CrudOperations<StudentEntity, Integer> {
     }
 
     public StudentEntity create(StudentEntity studentEntity) {
-        PreparedStatement statement = null;
-        ResultSet rs;
         try (Connection connection = this.connection.getConnection()) {
-            statement = connection.prepareStatement(ADD_QUERY, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement statement = connection.prepareStatement(ADD_QUERY, Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, studentEntity.getFirst_name());
             statement.setString(2, studentEntity.getLast_name());
             statement.setInt(3, studentEntity.getGroup_id());
             statement.execute();
-            rs = statement.getGeneratedKeys();
+            ResultSet rs = statement.getGeneratedKeys();
             rs.next();
             studentEntity.setStudent_id(rs.getInt("student_id"));
         } catch (SQLException e) {
@@ -50,14 +46,11 @@ public class StudentsDao implements CrudOperations<StudentEntity, Integer> {
 
     @Override
     public StudentEntity findBuId(Integer id) {
-        PreparedStatement statement = null;
-        ResultSet rs;
         try (Connection connection = this.connection.getConnection()) {
-            statement = connection.prepareStatement(FIND_QUERY);
+            PreparedStatement statement = connection.prepareStatement(FIND_QUERY);
             statement.setInt(1, id);
-            rs = statement.executeQuery();
+            ResultSet rs = statement.executeQuery();
             rs.next();
-
             int groupId = rs.getInt(2);
             String firstName = rs.getString(3);
             String lastName = rs.getString(4);
@@ -70,11 +63,9 @@ public class StudentsDao implements CrudOperations<StudentEntity, Integer> {
 
     public List<StudentEntity> readAll() {
         List<StudentEntity> result = new LinkedList<>();
-        PreparedStatement statement = null;
-        ResultSet rs;
         try (Connection connection = this.connection.getConnection()) {
-            statement = connection.prepareStatement(SELECT_QUERY);
-            rs = statement.executeQuery();
+            PreparedStatement statement = connection.prepareStatement(SELECT_QUERY);
+            ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 int id = rs.getInt(1);
                 int groupId = rs.getInt(2);
@@ -91,9 +82,8 @@ public class StudentsDao implements CrudOperations<StudentEntity, Integer> {
 
 
     public StudentEntity update(StudentEntity studentEntity) {
-        PreparedStatement statement = null;
         try (Connection connection = this.connection.getConnection()) {
-            statement = connection.prepareStatement(UPDATE_QUERY);
+            PreparedStatement statement = connection.prepareStatement(UPDATE_QUERY);
             statement.setString(1, studentEntity.getFirst_name());
             statement.setString(2, studentEntity.getLast_name());
             statement.setInt(3, studentEntity.getGroup_id());
@@ -107,9 +97,8 @@ public class StudentsDao implements CrudOperations<StudentEntity, Integer> {
 
 
     public void delete(Integer id) {
-        PreparedStatement statement = null;
         try (Connection connection = this.connection.getConnection()) {
-            statement = connection.prepareStatement(DELETE_QUERY);
+            PreparedStatement statement = connection.prepareStatement(DELETE_QUERY);
             statement.setInt(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -119,29 +108,23 @@ public class StudentsDao implements CrudOperations<StudentEntity, Integer> {
 
 
     public void additionCourse(int idStudent, int idCourse ){
-        PreparedStatement statement = null;
         try(Connection connection = this.connection.getConnection()){
-            statement = connection.prepareStatement(ADD_COURSE);
+            PreparedStatement statement = connection.prepareStatement(ADD_COURSE);
             statement.setInt(1,idStudent);
             statement.setInt(2,idCourse);
             statement.execute();
-
         }catch (SQLException e){
             throw new RuntimeException("additionCourse failed "+e.getLocalizedMessage());
         }
-
     }
 
 
     public List<StudentEntity> searchStudentByCourse(String course){
         List<StudentEntity>resultStudents = new ArrayList<>();
-        PreparedStatement statement;
-        ResultSet rs ;
-
-        try(Connection connection = this.connection.getConnection()){
-            statement = connection.prepareStatement(FIND_BY_COURSE);
+           try(Connection connection = this.connection.getConnection()){
+            PreparedStatement statement = connection.prepareStatement(FIND_BY_COURSE);
             statement.setString(1,course);
-            rs = statement.executeQuery();
+            ResultSet rs = statement.executeQuery();
             while(rs.next()){
                String firstName = rs.getString(1);
                String lastName = rs.getString(2);
@@ -152,5 +135,4 @@ public class StudentsDao implements CrudOperations<StudentEntity, Integer> {
         }
         return resultStudents;
     }
-
 }

@@ -23,9 +23,7 @@ public class MainApp {
         dataGenerator.generateCourses();
         dataGenerator.generateStudents();
         dataGenerator.generatedStudentCourse();
-
         UIService dbService = context.getUiService();
-
-        dbService.selectOperation();
+        dbService.runMenu();
     }
 }
