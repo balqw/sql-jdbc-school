@@ -22,8 +22,8 @@ public class CourseService implements CrudOperations<CourseEntity,Integer>{
     }
 
     @Override
-    public CourseEntity findBuId(Integer entity) {
-        return service.findById(entity);
+    public CourseEntity findBuId(Integer id) {
+        return service.findById(id);
     }
 
     @Override

@@ -35,7 +35,7 @@ public class GroupsDao {
             statement.execute();
             ResultSet rs = statement.getGeneratedKeys();
             rs.next();
-            groupEntity.setGroup_id(rs.getInt(1));
+            groupEntity.setGroup_id(rs.getInt("group_id"));
         } catch (SQLException e) {
             throw new RuntimeException("Create group failed: " + e.getLocalizedMessage());
         }
@@ -46,10 +46,10 @@ public class GroupsDao {
     public GroupEntity findById(Integer id) {
         try (Connection connection = this.connection.getConnection();) {
             PreparedStatement statement = connection.prepareStatement(FIND_QUERY);
+            statement.setInt(1,id);
             ResultSet rs = statement.executeQuery();
-            int group_id = rs.getInt(1);
-            String name = rs.getString(2);
-            return new GroupEntity(group_id,name);
+            String name = rs.getString("group_name");
+            return new GroupEntity(id,name);
         } catch (SQLException e) {
             throw new RuntimeException("Find group failed");
         }

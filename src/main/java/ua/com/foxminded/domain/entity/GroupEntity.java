@@ -24,7 +24,8 @@ public class GroupEntity {
         this.name = name;
     }
 
-    public GroupEntity(int id, String name) {
+    public GroupEntity(int group_id, String name) {
+        this.group_id = group_id;
         this.name = name;
     }
 

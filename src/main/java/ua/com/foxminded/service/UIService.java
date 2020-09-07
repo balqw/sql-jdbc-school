@@ -26,8 +26,6 @@ public class UIService {
             selectOperation(operation);
             printMenu();
         }
-
-
     }
 
     private void selectOperation(String operation) {

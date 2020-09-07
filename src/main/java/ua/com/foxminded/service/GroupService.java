@@ -19,24 +19,25 @@ public class GroupService implements CrudOperations<GroupEntity,Integer> {
     }
 
     @Override
-    public GroupEntity findBuId(Integer entity) {
-        return null;
+    public GroupEntity findBuId(Integer id) {
+        return service.findById(id);
     }
 
     @Override
     public List<GroupEntity> readAll() {
-        return null;
+        return service.readAll();
     }
 
     @Override
     public GroupEntity update(GroupEntity entity) {
-        return null;
+        return service.update(entity);
     }
 
     @Override
-    public void delete(Integer entity) {
-
+    public void delete(Integer id) {
+            service.deleteByID(id);
     }
+
     public List<GroupEntity> findGroupEqualsStudentCount(int count){return service.findGroupEqualsStudentCount(count);}
 
 
