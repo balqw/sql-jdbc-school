@@ -1,5 +1,7 @@
 package ua.com.foxminded.domain.entity;
 
+import com.sun.deploy.security.SelectableSecurityManager;
+
 public class StudentEntity {
     private int student_id;
     private int group_id ;
@@ -57,11 +59,27 @@ public class StudentEntity {
         this.last_name = last_name;
     }
 
-    @Override
+    /*@Override
     public String toString() {
         return "id="+student_id+
                 ", group_id="+group_id+
                 ", first_name="+first_name+
                 ", last_name="+last_name+" "+"\n";
-    }
+    }*/
+    @Override
+    public String toString() {
+        if(group_id==0) {
+            return "first_name=" + first_name +
+                    " last_name=" + last_name + "\n";
+        }
+            else
+            return "id=" + student_id +
+                    ", group_id=" + group_id +
+                    ", first_name=" + first_name +
+                    ", last_name=" + last_name + " " + "\n";
+
+
+        }
+
+
 }

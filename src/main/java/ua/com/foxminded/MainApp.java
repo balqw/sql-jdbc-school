@@ -14,7 +14,7 @@ import static ua.com.foxminded.config.Context.POSTGRES;
 
 public class MainApp {
     public static void main(String[] args) {
-        Context context = Context.connectorTypeBuilder(POSTGRES);
+        Context context = Context.connectorTypeBuilder(H2);
         InitialScriptRunner creatorDB = context.getInitialScriptRunner();
         creatorDB.creat("src/main/resources/init.sql");
 

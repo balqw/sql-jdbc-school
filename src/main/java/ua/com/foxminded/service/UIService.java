@@ -3,6 +3,7 @@ package ua.com.foxminded.service;
 
 import ua.com.foxminded.domain.entity.StudentEntity;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class UIService {
@@ -37,7 +38,10 @@ public class UIService {
         } else if (operation.equalsIgnoreCase("b")) {
             System.out.println("Please write course");
             String course = scanner.nextLine();
-            System.out.println(studentService.searchByCourse(course));
+            List<StudentEntity>result =  studentService.searchByCourse(course);
+            for(StudentEntity studentEntity: result){
+                System.out.println(studentEntity);
+            }
         } else if (operation.equalsIgnoreCase("c")) {
             System.out.println("Please write student name:");
             String firstName = scanner.nextLine();
