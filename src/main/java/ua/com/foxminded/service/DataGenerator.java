@@ -27,7 +27,6 @@ public class DataGenerator {
     }
 
     public void generatedStudentCourse(){
-
         for(int i= 1;i<=200;i++){
             int randomCount =1+ (int) (Math.random() * 3);
             for(int j = 0; j < randomCount;j++) {

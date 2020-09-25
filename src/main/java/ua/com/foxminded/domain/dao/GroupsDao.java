@@ -11,7 +11,7 @@ import java.util.List;
 
 public class GroupsDao {
     private static final String ADD_QUERY = "insert into groups(name) values (?);";
-    private static final String UPDATE_QUERY = "update groups set group_id=? where group_id=?;";
+    private static final String UPDATE_QUERY = "update groups set name=? where group_id=?;";
     private static final String FIND_QUERY = "select * from groups WHERE group_id=?;";
     private static final String DELETE_QUERY = "delete from groups where group_id=?;";
     private static final String SELECT_QUERY = "select * from groups;";
@@ -48,7 +48,8 @@ public class GroupsDao {
             PreparedStatement statement = connection.prepareStatement(FIND_QUERY);
             statement.setInt(1,id);
             ResultSet rs = statement.executeQuery();
-            String name = rs.getString("group_name");
+            rs.next();
+            String name = rs.getString("name");
             return new GroupEntity(id,name);
         } catch (SQLException e) {
             throw new RuntimeException("Find group failed");
@@ -76,7 +77,7 @@ public class GroupsDao {
     public GroupEntity update(GroupEntity groupEntity) {
         try (Connection connection = this.connection.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(UPDATE_QUERY);
-            statement.setString(1, groupEntity.getName());
+            statement.setString(1,groupEntity.getName());
             statement.setInt(2, groupEntity.getGroup_id());
             statement.executeUpdate();
         } catch (SQLException e) {

@@ -19,7 +19,7 @@ public class GroupService implements CrudOperations<GroupEntity,Integer> {
     }
 
     @Override
-    public GroupEntity findBuId(Integer id) {
+    public GroupEntity findById(Integer id) {
         return service.findById(id);
     }
 

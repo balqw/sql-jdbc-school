@@ -29,7 +29,7 @@ public class UIService {
         }
     }
 
-    private void selectOperation(String operation) {
+    public void selectOperation(String operation) {
         Scanner scanner = new Scanner(System.in);
         if (operation.equalsIgnoreCase("a")) {
             System.out.println("Please enter number of students:");
@@ -59,13 +59,13 @@ public class UIService {
             int studentId = Integer.parseInt(scanner.nextLine());
             System.out.println("Please write course_id");
             int courseId = Integer.parseInt(scanner.nextLine());
-            courseService.addCourseToStudent(studentId,courseId);
+            studentService.addCourse(studentId,courseId);
         } else if (operation.equalsIgnoreCase("f")) {
             System.out.println("Please write student_id");
             int studentId = Integer.parseInt(scanner.nextLine());
             System.out.println("Please write course_id");
             int courseId = Integer.parseInt(scanner.nextLine());
-            courseService.deleteCourseFromStudent(studentId,courseId);
+            studentService.deleteCourseFromStudent(studentId,courseId);
         } else {
             System.out.println("Operation is incorrect");
         }

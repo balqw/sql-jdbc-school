@@ -1,5 +1,7 @@
 package ua.com.foxminded.domain.entity;
 
+import java.util.Objects;
+
 public class GroupEntity {
     private int group_id;
     private String name;
@@ -36,5 +38,19 @@ public class GroupEntity {
                 "group_id=" + group_id +
                 ", name='" + name + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        GroupEntity that = (GroupEntity) o;
+        return group_id == that.group_id &&
+                name.equals(that.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(group_id, name);
     }
 }

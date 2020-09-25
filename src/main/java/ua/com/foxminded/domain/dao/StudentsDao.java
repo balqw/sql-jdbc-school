@@ -10,16 +10,18 @@ import java.util.*;
 public class StudentsDao implements CrudOperations<StudentEntity, Integer> {
     private static final String UPDATE_QUERY = "update students set first_name=?,last_name=?,group_id=? where student_id=?;";
     private static final String ADD_QUERY = "insert into students(first_name,last_name,group_id) values (?,?,?);";
-    private static final String FIND_QUERY = "select * from students WHERE students_id=?;";
+    private static final String FIND_QUERY = "select * from students where student_id=?;";
     private static final String DELETE_QUERY = "delete from students where student_id=?;";
     private static final String SELECT_QUERY = "select * from students;";
     private static final String ADD_COURSE = "insert into student_course (student_id, course_id) values(?,?);";
-    private static final String FIND_BY_COURSE = "select first_name, last_name from students "
+    private static final String FIND_BY_COURSE = "select * from students "
     +"inner join student_course "
     +"on students.student_id = student_course.student_id "
     +"inner join courses "
     +"on courses.course_id = student_course.course_id "
     +"where courses.course_name = ?;";
+    private static final String DELETE_COURSE_FROM_STUDENT = "delete from student_course\n" +
+            "where student_id = ? and course_id = ?;";
 
 
     private final DBConnection connection;
@@ -45,7 +47,7 @@ public class StudentsDao implements CrudOperations<StudentEntity, Integer> {
     }
 
     @Override
-    public StudentEntity findBuId(Integer id) {
+    public StudentEntity findById(Integer id) {
         try (Connection connection = this.connection.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(FIND_QUERY);
             statement.setInt(1, id);
@@ -98,7 +100,8 @@ public class StudentsDao implements CrudOperations<StudentEntity, Integer> {
 
     public void delete(Integer id) {
         try (Connection connection = this.connection.getConnection()) {
-            PreparedStatement statement = connection.prepareStatement(DELETE_QUERY);
+            PreparedStatement statement = connection.prepareStatement(DELETE_QUERY,Statement.RETURN_GENERATED_KEYS);
+
             statement.setInt(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -107,7 +110,7 @@ public class StudentsDao implements CrudOperations<StudentEntity, Integer> {
     }
 
 
-    public void additionCourse(int idStudent, int idCourse ){
+    public void additionCourseToStudent(int idStudent, int idCourse ) {
         try(Connection connection = this.connection.getConnection()){
             PreparedStatement statement = connection.prepareStatement(ADD_COURSE);
             statement.setInt(1,idStudent);
@@ -119,20 +122,33 @@ public class StudentsDao implements CrudOperations<StudentEntity, Integer> {
     }
 
 
-    public List<StudentEntity> searchStudentByCourse(String course){
+    public List<StudentEntity> searchStudentByCourse(String course) {
         List<StudentEntity>resultStudents = new ArrayList<>();
            try(Connection connection = this.connection.getConnection()){
             PreparedStatement statement = connection.prepareStatement(FIND_BY_COURSE);
             statement.setString(1,course);
             ResultSet rs = statement.executeQuery();
             while(rs.next()){
-               String firstName = rs.getString(1);
-               String lastName = rs.getString(2);
-                resultStudents.add(new StudentEntity(firstName,lastName));
+               int studentId = rs.getInt(1);
+               int groupId = rs.getInt(2);
+               String firstName = rs.getString(3);
+               String lastName = rs.getString(4);
+                resultStudents.add(new StudentEntity(studentId,groupId,firstName,lastName));
             }
         }catch (SQLException e){
             throw new RuntimeException("searchStudentByCourse failed "+e.getLocalizedMessage());
         }
         return resultStudents;
+    }
+
+    public void deleteCourseFromStudent(int idStudent,int idCourse){
+        try(Connection connection = this.connection.getConnection()){
+            PreparedStatement statement = connection.prepareStatement(DELETE_COURSE_FROM_STUDENT);
+            statement.setInt(1,idStudent);
+            statement.setInt(2,idCourse);
+            statement.executeUpdate();
+        }catch (SQLException e){
+            throw new RuntimeException("addCourse failed "+ e.getLocalizedMessage());
+        }
     }
 }

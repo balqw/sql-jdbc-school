@@ -1,15 +1,14 @@
 package ua.com.foxminded.service;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
-import org.mockito.internal.configuration.injection.MockInjection;
 import org.mockito.junit.jupiter.MockitoExtension;
 import ua.com.foxminded.domain.dao.GroupsDao;
 import ua.com.foxminded.domain.entity.GroupEntity;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -53,7 +52,7 @@ class GroupServiceTest {
         GroupEntity preparedGroup = new GroupEntity(1,GROUP_NAME);
         when(groupsDao.findById(anyInt())).thenReturn(preparedGroup);
 
-        GroupEntity result = groupService.findBuId(1);
+        GroupEntity result = groupService.findById(1);
 
         assertNotNull(result);
         assertEquals(1,result.getGroup_id());
@@ -93,9 +92,20 @@ class GroupServiceTest {
 
     @Test
     void delete() {
+        groupService.delete(anyInt());
+
+        verify(groupsDao,atLeastOnce()).deleteByID(anyInt());
     }
 
     @Test
     void findGroupEqualsStudentCount() {
+        List<GroupEntity>exceptedGroupsList = new ArrayList<>(Arrays.asList(new GroupEntity(GROUP_NAME)));
+        when(groupService.findGroupEqualsStudentCount(anyInt())).thenReturn(exceptedGroupsList);
+
+        List<GroupEntity>resultGroupsList = groupService.findGroupEqualsStudentCount(anyInt());
+
+        assertNotNull(resultGroupsList);
+        assertEquals(exceptedGroupsList.get(0),resultGroupsList.get(0));
+        verify(groupsDao,atLeastOnce()).findGroupEqualsStudentCount(anyInt());
     }
 }

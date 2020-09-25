@@ -21,9 +21,7 @@ public class CoursesDao {
     private static final String FIND_QUERY = "select * from courses WHERE course_id=?;";
     private static final String DELETE_QUERY = "delete from courses where course_id=?;";
     private static final String SELECT_QUERY = "select * from courses;";
-    private static final String DELETE_COURSE_FROM_STUDENT = "delete from student_course\n" +
-            "where student_id = ? and course_id = ?;";
-    private static final String ADD_COURSE_TO_STUDENT = "insert into student_course (student_id,course_id) values(?,?);";
+
     public CoursesDao(DBConnection dbConnection) {
         this.connection = dbConnection;
     }
@@ -49,9 +47,10 @@ public class CoursesDao {
             PreparedStatement statement = connection.prepareStatement(FIND_QUERY);
             statement.setInt(1,id);
             ResultSet rs = statement.executeQuery();
-            int course_id = rs.getInt(1);
-            String course_name = rs.getString(2);
-            String description = rs.getString(3);
+            rs.next();
+            int course_id = rs.getInt("course_id");
+            String course_name = rs.getString("course_name");
+            String description = rs.getString("course_description");
             return new CourseEntity(course_id,course_name,description);
         }catch (SQLException e){
             throw new RuntimeException("FindById course failed");
@@ -98,30 +97,6 @@ public class CoursesDao {
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException("DeleteById course failed");
-        }
-    }
-
-
-    public void addCourseToStudent(int idStudent,int idCourse){
-        try(Connection connection = this.connection.getConnection()){
-            PreparedStatement statement = connection.prepareStatement(ADD_COURSE_TO_STUDENT);
-           statement.setInt(1,idStudent);
-           statement.setInt(2,idCourse);
-           statement.execute();
-        }catch (SQLException e){
-            throw new RuntimeException("addCourse failed "+ e.getLocalizedMessage());
-        }
-    }
-
-
-    public void deleteCourseFromStudent(int idStudent,int idCourse){
-        try(Connection connection = this.connection.getConnection()){
-            PreparedStatement statement = connection.prepareStatement(DELETE_COURSE_FROM_STUDENT);
-            statement.setInt(1,idStudent);
-            statement.setInt(2,idCourse);
-            statement.executeUpdate();
-        }catch (SQLException e){
-            throw new RuntimeException("addCourse failed "+ e.getLocalizedMessage());
         }
     }
 }

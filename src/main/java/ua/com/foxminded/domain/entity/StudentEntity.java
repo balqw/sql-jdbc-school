@@ -2,6 +2,8 @@ package ua.com.foxminded.domain.entity;
 
 import com.sun.deploy.security.SelectableSecurityManager;
 
+import java.util.Objects;
+
 public class StudentEntity {
     private int student_id;
     private int group_id ;
@@ -82,4 +84,19 @@ public class StudentEntity {
         }
 
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        StudentEntity that = (StudentEntity) o;
+        return student_id == that.student_id &&
+                group_id == that.group_id &&
+                first_name.equals(that.first_name) &&
+                last_name.equals(that.last_name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(student_id, group_id, first_name, last_name);
+    }
 }

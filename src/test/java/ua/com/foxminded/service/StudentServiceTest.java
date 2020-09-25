@@ -6,9 +6,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import ua.com.foxminded.domain.dao.StudentsDao;
-import ua.com.foxminded.domain.entity.GroupEntity;
 import ua.com.foxminded.domain.entity.StudentEntity;
-import ua.com.foxminded.service.StudentService;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -54,9 +52,9 @@ public class StudentServiceTest {
     @Test
     public void findBuId() {
         StudentEntity preparedStudent = new StudentEntity(1, 0, STUDENT_FIRST_NAME, STUDENT_LAST_NAME);
-        when(studentsDao.findBuId(1)).thenReturn(preparedStudent);
+        when(studentsDao.findById(1)).thenReturn(preparedStudent);
 
-        StudentEntity result = studentService.findBuId(1);
+        StudentEntity result = studentService.findById(1);
 
         assertNotNull(result);
         assertEquals(1, result.getStudent_id());
@@ -65,7 +63,7 @@ public class StudentServiceTest {
         assertNotEquals(1,result.getGroup_id());
         assertEquals(STUDENT_FIRST_NAME,result.getFirst_name());
         assertEquals(STUDENT_LAST_NAME,result.getLast_name());
-        verify(studentsDao,atLeastOnce()).findBuId(1);
+        verify(studentsDao,atLeastOnce()).findById(1);
 
     }
 
@@ -97,14 +95,14 @@ public class StudentServiceTest {
 
     @Test
     public void delete() {
-
-
-       //verify(studentsDao,atLeastOnce()).delete(1);
+        studentService.delete(anyInt());
+        verify(studentsDao,atLeastOnce()).delete(anyInt());
     }
 
     @Test
     public void addCourse() {
-      //???
+     studentService.addCourse(anyInt(),anyInt());
+     verify(studentsDao,atLeastOnce()).additionCourseToStudent(anyInt(),anyInt());
     }
 
     @Test
@@ -116,6 +114,17 @@ public class StudentServiceTest {
         assertNotNull(result);
 
         verify(studentsDao,atLeastOnce()).searchStudentByCourse(anyString());
+    }
 
+    @Test
+    public void searchStudentByCourse() {
+        List<StudentEntity>exceptedStudentList = new ArrayList<>(Arrays.asList(new StudentEntity(1,1,STUDENT_FIRST_NAME,STUDENT_LAST_NAME)));
+        when(studentService.searchByCourse(anyString())).thenReturn(exceptedStudentList);
+
+        List<StudentEntity>resultStudentsList = studentService.searchByCourse(anyString());
+
+        assertNotNull(resultStudentsList);
+        assertEquals(exceptedStudentList.get(0),resultStudentsList.get(0));
+        verify(studentsDao,atLeastOnce()).searchStudentByCourse(anyString());
     }
 }

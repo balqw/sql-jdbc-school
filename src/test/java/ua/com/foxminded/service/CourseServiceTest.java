@@ -49,9 +49,9 @@ class CourseServiceTest {
     @Test
     void findBuId() {
         CourseEntity preparedCourse = new CourseEntity(1,COURSE_NAME,COURSE_DESCRIPTION);
-        when(courseService.findBuId(anyInt())).thenReturn(preparedCourse);
+        when(courseService.findById(anyInt())).thenReturn(preparedCourse);
 
-        CourseEntity result = courseService.findBuId(1);
+        CourseEntity result = courseService.findById(1);
 
         assertNotNull(result);
         assertEquals(1,result.getId());
@@ -89,13 +89,10 @@ class CourseServiceTest {
 
     @Test
     void delete() {
+        courseService.delete(anyInt());
+
+        verify(coursesDao,atLeastOnce()).deleteById(anyInt());
     }
 
-    @Test
-    void addCourseToStudent() {
-    }
 
-    @Test
-    void deleteCourseFromStudent() {
-    }
 }

@@ -22,7 +22,7 @@ public class CourseService implements CrudOperations<CourseEntity,Integer>{
     }
 
     @Override
-    public CourseEntity findBuId(Integer id) {
+    public CourseEntity findById(Integer id) {
         return service.findById(id);
     }
 
@@ -41,8 +41,6 @@ public class CourseService implements CrudOperations<CourseEntity,Integer>{
         service.deleteById(entity);
     }
 
-    public void addCourseToStudent(int idStudent,int idCourse){service.addCourseToStudent(idStudent, idCourse);}
 
-    public void deleteCourseFromStudent(int idStudent,int idCourse){service.deleteCourseFromStudent(idStudent, idCourse);}
 
 }
