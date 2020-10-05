@@ -29,7 +29,7 @@ class GroupsDaoTest {
     }
 
     @Test
-    void create() {
+    void methodCreateShouldAddNewGroup() {
         GroupEntity exceptedGroup = new GroupEntity(1,GROUP_NAME);
         int fieldsBefore = testingGroupDao.readAll().size();
         GroupEntity actualGroup = testingGroupDao.create(new GroupEntity(GROUP_NAME));
@@ -42,7 +42,7 @@ class GroupsDaoTest {
     }
 
     @Test
-    void findById() {
+    void methodFindByIdShouldFindGroupWithSpecifiedId() {
         testingGroupDao.create(new GroupEntity(GROUP_NAME));
         GroupEntity exceptedGroup = new GroupEntity(1,GROUP_NAME);
 
@@ -53,7 +53,7 @@ class GroupsDaoTest {
     }
 
     @Test
-    void readAll() {
+    void methodReadAllShouldReturnAllGroups() {
         List<GroupEntity>exceptedGroupsList = new LinkedList<>(Arrays.asList(
                 new GroupEntity(1,GROUP_NAME),
                 new GroupEntity(2,GROUP_NAME)
@@ -70,7 +70,7 @@ class GroupsDaoTest {
     }
 
     @Test
-    void update() {
+    void methodUpdateShouldChangeSpecifiedProperties() {
         testingGroupDao.create(new GroupEntity(GROUP_NAME));
         GroupEntity exceptedGroup = new GroupEntity(1,"NEW_NAME");
 
@@ -82,7 +82,7 @@ class GroupsDaoTest {
     }
 
     @Test
-    void deleteByID() {
+    void methodDeleteShouldDeleteGroupWithSpecifiedId() {
         testingGroupDao.create(new GroupEntity(GROUP_NAME));
         testingGroupDao.create(new GroupEntity(GROUP_NAME));
         int fieldBefore = testingGroupDao.readAll().size();
@@ -91,11 +91,11 @@ class GroupsDaoTest {
         GroupEntity groupNotDelete = testingGroupDao.findById(2);
 
         assertEquals(fieldBefore-1,fieldAfter);
-        assertEquals(2,groupNotDelete.getGroup_id());
+        assertEquals(2,groupNotDelete.getGroupId());
     }
 
     @Test
-    void findGroupEqualsStudentCount() {
+    void methodFindGroupEqualsStudentCountShouldReturnGroupsWithSpecifiedNumberStudents() {
         StudentsDao studentsDao = new StudentsDao(connection);
         testingGroupDao.create(new GroupEntity(GROUP_NAME));
         testingGroupDao.create(new GroupEntity(GROUP_NAME));

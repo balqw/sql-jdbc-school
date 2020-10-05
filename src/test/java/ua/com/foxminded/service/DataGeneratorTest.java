@@ -31,31 +31,39 @@ class DataGeneratorTest {
     }
 
     @Test
-    void generateGroups() {
+    void methodGenerateGroupsShouldCreateTenGroups() {
         dataGenerator.generateGroups();
-        int exceptedField = groupService.readAll().size();
-
-        assertEquals(10,exceptedField);
+        int actualFields = groupService.readAll().size();
+        int exceptedFields = 10;
+        assertEquals(exceptedFields,actualFields);
     }
 
     @Test
-    void generatedStudentCourse() {
-            // ??
+    void methodGeneratedStudentCourseShouldSelectToStudentCourse() {
+           dataGenerator.generateCourses();
+           dataGenerator.generateGroups();
+           dataGenerator.generateStudents();
+           dataGenerator.generatedStudentCourse();
+
+           /*как сделать проверку теста ?*/
+
     }
 
     @Test
-    void generateCourses() {
+    void methodGenerateCoursesShouldCreateTenCourses() {
         dataGenerator.generateCourses();
-        int exceptedField = courseService.readAll().size();
-        assertEquals(10,exceptedField);
+        int actualFields = courseService.readAll().size();
+        int exceptedFields = 10;
+        assertEquals(exceptedFields,actualFields);
     }
 
     @Test
-    void generateStudents() {
+    void methodGenerateStudentsShouldCreateTwoHundredStudents() {
         dataGenerator.generateGroups();
         dataGenerator.generateStudents();
-        int exceptedField = studentService.readAll().size();
+        int actualFields = studentService.readAll().size();
+        int exceptedFields = 200;
 
-        assertEquals(200,exceptedField);
+        assertEquals(exceptedFields,actualFields);
     }
 }

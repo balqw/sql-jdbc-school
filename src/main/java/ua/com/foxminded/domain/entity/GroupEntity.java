@@ -3,15 +3,15 @@ package ua.com.foxminded.domain.entity;
 import java.util.Objects;
 
 public class GroupEntity {
-    private int group_id;
+    private int groupId;
     private String name;
 
-    public int getGroup_id() {
-        return group_id;
+    public int getGroupId() {
+        return groupId;
     }
 
-    public void setGroup_id(int group_id) {
-        this.group_id = group_id;
+    public void setGroupId(int groupId) {
+        this.groupId = groupId;
     }
 
     public String getName() {
@@ -26,8 +26,8 @@ public class GroupEntity {
         this.name = name;
     }
 
-    public GroupEntity(int group_id, String name) {
-        this.group_id = group_id;
+    public GroupEntity(int groupId, String name) {
+        this.groupId = groupId;
         this.name = name;
     }
 
@@ -35,7 +35,7 @@ public class GroupEntity {
     @Override
     public String toString() {
         return "GroupEntity{" +
-                "group_id=" + group_id +
+                "group_id=" + groupId +
                 ", name='" + name + '\'' +
                 '}';
     }
@@ -45,12 +45,12 @@ public class GroupEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         GroupEntity that = (GroupEntity) o;
-        return group_id == that.group_id &&
+        return groupId == that.groupId &&
                 name.equals(that.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(group_id, name);
+        return Objects.hash(groupId, name);
     }
 }

@@ -48,10 +48,10 @@ public class CoursesDao {
             statement.setInt(1,id);
             ResultSet rs = statement.executeQuery();
             rs.next();
-            int course_id = rs.getInt("course_id");
-            String course_name = rs.getString("course_name");
+            int courseId = rs.getInt("course_id");
+            String courseName = rs.getString("course_name");
             String description = rs.getString("course_description");
-            return new CourseEntity(course_id,course_name,description);
+            return new CourseEntity(courseId,courseName,description);
         }catch (SQLException e){
             throw new RuntimeException("FindById course failed");
         }

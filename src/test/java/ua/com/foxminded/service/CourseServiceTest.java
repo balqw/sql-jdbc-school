@@ -31,7 +31,7 @@ class CourseServiceTest {
     }
 
     @Test
-    void create() {
+    void methodCreateShouldReturnCourse() {
         CourseEntity preparedCourse = new CourseEntity(0,COURSE_NAME,COURSE_DESCRIPTION);
         when(courseService.create(any(CourseEntity.class))).thenReturn(new CourseEntity(1,COURSE_NAME,COURSE_DESCRIPTION));
 
@@ -47,7 +47,7 @@ class CourseServiceTest {
     }
 
     @Test
-    void findBuId() {
+    void methodFindBuIdShouldReturnCourseWithSpecifiedId() {
         CourseEntity preparedCourse = new CourseEntity(1,COURSE_NAME,COURSE_DESCRIPTION);
         when(courseService.findById(anyInt())).thenReturn(preparedCourse);
 
@@ -64,7 +64,7 @@ class CourseServiceTest {
     }
 
     @Test
-    void readAll() {
+    void methodReadAllShouldReturnListCourses() {
         List<CourseEntity>preparedCourseList = new ArrayList<>();
         when(courseService.readAll()).thenReturn(preparedCourseList);
 
@@ -76,7 +76,7 @@ class CourseServiceTest {
     }
 
     @Test
-    void update() {
+    void methodUpdateShouldReturnCourseWithNewProperties() {
         CourseEntity preparedCourse = new CourseEntity(1,COURSE_NAME,COURSE_DESCRIPTION);
         when(courseService.update(any(CourseEntity.class))).thenReturn(preparedCourse);
 
@@ -88,11 +88,9 @@ class CourseServiceTest {
     }
 
     @Test
-    void delete() {
+    void methodDeleteShouldReturnNothing() {
         courseService.delete(anyInt());
 
         verify(coursesDao,atLeastOnce()).deleteById(anyInt());
     }
-
-
 }

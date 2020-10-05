@@ -60,14 +60,7 @@ public class StudentEntity {
         this.first_name = first_name;
         this.last_name = last_name;
     }
-
-    /*@Override
-    public String toString() {
-        return "id="+student_id+
-                ", group_id="+group_id+
-                ", first_name="+first_name+
-                ", last_name="+last_name+" "+"\n";
-    }*/
+    
     @Override
     public String toString() {
         if(group_id==0) {

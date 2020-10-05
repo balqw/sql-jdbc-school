@@ -38,9 +38,8 @@ class StudentsDaoTest {
     }
 
 
-
     @Test
-    void create() {
+    void methodCreateShouldAddNewStudent() {
       StudentEntity exceptedResult = new StudentEntity(1,1,FIRST_NAME, LAST_NAME);
       int fieldsBefore = testingStudentDao.readAll().size();
 
@@ -54,7 +53,7 @@ class StudentsDaoTest {
 
 
     @Test
-    void findById() {
+    void methodFindByIdShouldFindStudentWithSpecifiedId() {
         StudentEntity exceptedStudent = new StudentEntity(1,1,FIRST_NAME, LAST_NAME);
         testingStudentDao.create(new StudentEntity(1,FIRST_NAME,LAST_NAME));
 
@@ -67,7 +66,7 @@ class StudentsDaoTest {
     }
 
     @Test
-    void readAll() {
+    void methodReadAllShouldReturnAllStudents() {
         List<StudentEntity>exceptedStudentsList = new LinkedList<>(Arrays.asList(
                 new StudentEntity(1,1,FIRST_NAME,LAST_NAME),
                 new StudentEntity(2,1,FIRST_NAME,LAST_NAME)
@@ -84,7 +83,7 @@ class StudentsDaoTest {
 
 
     @Test
-    void update() {
+    void methodUpdateShouldChangeSpecifiedProperties() {
         testingStudentDao.create(new StudentEntity(1,FIRST_NAME,LAST_NAME));
         StudentEntity exceptedStudent = new StudentEntity(1,2,"NEW_FIRST_NAME","NEW_LAST_NAME");
 
@@ -95,7 +94,7 @@ class StudentsDaoTest {
 
 
     @Test
-    void delete() {
+    void methodDeleteShouldDeleteStudentWithSpecifiedId() {
         testingStudentDao.create(new StudentEntity(1,FIRST_NAME,LAST_NAME));
         testingStudentDao.create(new StudentEntity(1,FIRST_NAME,LAST_NAME));
         int fieldsBefore = testingStudentDao.readAll().size();
@@ -111,7 +110,7 @@ class StudentsDaoTest {
     }
 
     @Test
-    void searchStudentByCourse() {
+    void searchStudentByCourseShouldReturnStudentWithSelectedCourse() {
         CoursesDao coursesDao = new CoursesDao(connection);
         coursesDao.create(new CourseEntity("math","math"));
         coursesDao.create(new CourseEntity("music","music"));

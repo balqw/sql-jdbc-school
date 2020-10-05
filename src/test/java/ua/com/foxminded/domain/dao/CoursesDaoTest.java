@@ -19,7 +19,6 @@ class CoursesDaoTest {
     private static final String NAME = "NAME";
     private static final String DESCRIPTION = "DESCRIPTION";
     private static final Context context = Context.connectorTypeBuilder(Context.H2);
-    private static final DBConnection connection = context.getDbConnection();
     private static CoursesDao testingCourseDao;
     private static  InitialScriptRunner scriptRunner;
 
@@ -32,7 +31,7 @@ class CoursesDaoTest {
     }
 
     @Test
-    void create() {
+    void methodCreateShouldAddNewCourse() {
         CourseEntity exceptedCourse = new CourseEntity(1,NAME,DESCRIPTION);
         int fieldsBefore = testingCourseDao.readAll().size();
         CourseEntity actualCourse = testingCourseDao.create(new CourseEntity(NAME,DESCRIPTION));
@@ -44,7 +43,7 @@ class CoursesDaoTest {
     }
 
     @Test
-    void findById() {
+    void methodFindByIdShouldFindCourseWithSpecifiedId() {
         CourseEntity exceptedCourse = new CourseEntity(2,NAME,DESCRIPTION);
 
         testingCourseDao.create(new CourseEntity(NAME,DESCRIPTION));
@@ -56,7 +55,7 @@ class CoursesDaoTest {
     }
 
     @Test
-    void readAll() {
+    void methodReadAllShouldReturnAllCourse() {
         List<CourseEntity>exceptedCoursesList = new LinkedList<>(Arrays.asList(
                 new CourseEntity(1,NAME,DESCRIPTION),
                 new CourseEntity(2,NAME,DESCRIPTION)
@@ -72,7 +71,7 @@ class CoursesDaoTest {
     }
 
     @Test
-    void update() {
+    void methodUpdateShouldChangeSpecifiedProperties() {
         CourseEntity exceptedCourse = new CourseEntity(1,"NEW_NAME","NEW_DESCRIPTION");
         testingCourseDao.create(new CourseEntity(NAME,DESCRIPTION));
         CourseEntity actualCourse = testingCourseDao.update(exceptedCourse);
@@ -82,7 +81,7 @@ class CoursesDaoTest {
     }
 
     @Test
-    void deleteById() {
+    void methodDeleteShouldDeleteCourseWithSpecifiedId() {
         testingCourseDao.create(new CourseEntity(NAME,DESCRIPTION));
         testingCourseDao.create(new CourseEntity(NAME,DESCRIPTION));
         int fieldsBefore = testingCourseDao.readAll().size();
@@ -95,40 +94,4 @@ class CoursesDaoTest {
 
     }
 
-    @Test
-    void addCourseToStudent() {
-
-    }
-
-    @Test
-    void deleteCourseFromStudent() {
-    }
-
-    @Test
-    void testCreate() {
-    }
-
-    @Test
-    void testFindById() {
-    }
-
-    @Test
-    void testReadAll() {
-    }
-
-    @Test
-    void testUpdate() {
-    }
-
-    @Test
-    void testDeleteById() {
-    }
-
-    @Test
-    void testAddCourseToStudent() {
-    }
-
-    @Test
-    void testDeleteCourseFromStudent() {
-    }
 }

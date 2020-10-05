@@ -8,10 +8,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import ua.com.foxminded.domain.dao.StudentsDao;
 import ua.com.foxminded.domain.entity.StudentEntity;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -30,11 +27,10 @@ public class StudentServiceTest {
     public void beforeEach() {
         studentsDao = Mockito.mock(StudentsDao.class);
         studentService = new StudentService(studentsDao);
-
     }
 
     @Test
-    public void create() {
+    public void methodCreateShouldReturnStudent() {
         StudentEntity preparedStudent = new StudentEntity(0, 0, STUDENT_FIRST_NAME, STUDENT_LAST_NAME);
         when(studentsDao.create(any(StudentEntity.class))).thenReturn(new StudentEntity(1, 0, STUDENT_FIRST_NAME, STUDENT_LAST_NAME));
 
@@ -50,7 +46,7 @@ public class StudentServiceTest {
     }
 
     @Test
-    public void findBuId() {
+    public void methodFindBuIdShouldReturnStudentWithSpecifiedId() {
         StudentEntity preparedStudent = new StudentEntity(1, 0, STUDENT_FIRST_NAME, STUDENT_LAST_NAME);
         when(studentsDao.findById(1)).thenReturn(preparedStudent);
 
@@ -68,7 +64,7 @@ public class StudentServiceTest {
     }
 
     @Test
-    public void readAll() {
+    public void methodReadAllShouldReturnListWithStudent() {
         List<StudentEntity>preparedStudentList = new LinkedList<>(Arrays.asList(new StudentEntity(1, 0, STUDENT_FIRST_NAME, STUDENT_LAST_NAME)));
         when(studentService.readAll()).thenReturn(new LinkedList<>(Arrays.asList(new StudentEntity(1, 0, STUDENT_FIRST_NAME, STUDENT_LAST_NAME))));
 
@@ -80,7 +76,7 @@ public class StudentServiceTest {
     }
 
     @Test
-    public void update() {
+    public void methodUpdateShouldReturnStudentWithNewProperties() {
         StudentEntity preparedStudent = new StudentEntity(1, 0, STUDENT_FIRST_NAME, STUDENT_LAST_NAME);
         when(studentService.update(any(StudentEntity.class))).thenReturn(preparedStudent);
 
@@ -94,37 +90,35 @@ public class StudentServiceTest {
     }
 
     @Test
-    public void delete() {
+    public void methodDeleteShouldReturnNothing() {
         studentService.delete(anyInt());
         verify(studentsDao,atLeastOnce()).delete(anyInt());
     }
 
     @Test
-    public void addCourse() {
+    public void methodAddCourseShouldReturnNothing() {
      studentService.addCourse(anyInt(),anyInt());
      verify(studentsDao,atLeastOnce()).additionCourseToStudent(anyInt(),anyInt());
     }
 
-    @Test
-    public void searchByCourse() {
-        List<StudentEntity>preparedList = new ArrayList<>();
-        when(studentsDao.searchStudentByCourse(anyString())).thenReturn(preparedList);
-
-        List<StudentEntity>result = studentService.searchByCourse(anyString());
-        assertNotNull(result);
-
-        verify(studentsDao,atLeastOnce()).searchStudentByCourse(anyString());
-    }
 
     @Test
-    public void searchStudentByCourse() {
-        List<StudentEntity>exceptedStudentList = new ArrayList<>(Arrays.asList(new StudentEntity(1,1,STUDENT_FIRST_NAME,STUDENT_LAST_NAME)));
-        when(studentService.searchByCourse(anyString())).thenReturn(exceptedStudentList);
+    public void methodSearchByCourseShouldReturnListStudentsWithSpecifiedCourse() {
+        List<StudentEntity>exceptedStudentList = new ArrayList<>(Collections.singletonList(new StudentEntity(1, 1, STUDENT_FIRST_NAME, STUDENT_LAST_NAME)));
+        when(studentService.searchByCourse("math")).thenReturn(exceptedStudentList);
 
-        List<StudentEntity>resultStudentsList = studentService.searchByCourse(anyString());
+        List<StudentEntity>resultStudentsList = studentService.searchByCourse("math");
 
         assertNotNull(resultStudentsList);
         assertEquals(exceptedStudentList.get(0),resultStudentsList.get(0));
         verify(studentsDao,atLeastOnce()).searchStudentByCourse(anyString());
+    }
+
+
+    @Test
+    public void methodDeleteCourseFromStudentShouldReturnNothing() {
+        studentService.deleteCourseFromStudent(anyInt(),anyInt());
+
+        verify(studentsDao,atLeastOnce()).deleteCourseFromStudent(anyInt(),anyInt());
     }
 }

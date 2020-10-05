@@ -2,7 +2,6 @@ package ua.com.foxminded.domain.dao;
 
 import ua.com.foxminded.config.DBConnection;
 import ua.com.foxminded.domain.entity.GroupEntity;
-import ua.com.foxminded.domain.entity.StudentEntity;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -35,7 +34,7 @@ public class GroupsDao {
             statement.execute();
             ResultSet rs = statement.getGeneratedKeys();
             rs.next();
-            groupEntity.setGroup_id(rs.getInt("group_id"));
+            groupEntity.setGroupId(rs.getInt("group_id"));
         } catch (SQLException e) {
             throw new RuntimeException("Create group failed: " + e.getLocalizedMessage());
         }
@@ -78,7 +77,7 @@ public class GroupsDao {
         try (Connection connection = this.connection.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(UPDATE_QUERY);
             statement.setString(1,groupEntity.getName());
-            statement.setInt(2, groupEntity.getGroup_id());
+            statement.setInt(2, groupEntity.getGroupId());
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException("Update group failed");
