@@ -43,7 +43,7 @@ public class UIService {
                 System.out.println(studentEntity);
             }
         } else if (operation.equalsIgnoreCase("c")) {
-            System.out.println("Please write student name:");
+            System.out.println("Please enter name:");
             String firstName = scanner.nextLine();
             System.out.println("Please write student last name:");
             String lastName = scanner.nextLine();

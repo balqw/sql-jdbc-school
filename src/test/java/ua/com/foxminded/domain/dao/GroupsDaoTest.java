@@ -7,10 +7,7 @@ import ua.com.foxminded.config.DBConnection;
 import ua.com.foxminded.config.InitialScriptRunner;
 import ua.com.foxminded.domain.entity.GroupEntity;
 import ua.com.foxminded.domain.entity.StudentEntity;
-
-
 import java.util.*;
-
 import static org.junit.jupiter.api.Assertions.*;
 import static ua.com.foxminded.config.Context.H2;
 

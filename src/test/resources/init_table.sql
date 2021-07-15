@@ -1,3 +1,5 @@
+create database university;
+
 drop table if exists  groups, students, courses, student_course cascade;
 create table groups (
                         group_id serial primary key,

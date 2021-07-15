@@ -6,17 +6,12 @@ import org.junit.jupiter.api.Test;
 import ua.com.foxminded.config.Context;
 import ua.com.foxminded.config.DBConnection;
 import ua.com.foxminded.config.InitialScriptRunner;
-
 import ua.com.foxminded.domain.entity.CourseEntity;
 import ua.com.foxminded.domain.entity.StudentEntity;
 import ua.com.foxminded.service.DataGenerator;
-
-
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.function.BooleanSupplier;
-
 import static org.junit.jupiter.api.Assertions.*;
 import static ua.com.foxminded.config.Context.H2;
 
@@ -104,10 +99,7 @@ class StudentsDaoTest {
 
         assertEquals(fieldsBefore-1,fieldsAfter);
     }
-    @Test
-    void additionCourseToStudent() {
-        //??
-    }
+
 
     @Test
     void searchStudentByCourseShouldReturnStudentWithSelectedCourse() {

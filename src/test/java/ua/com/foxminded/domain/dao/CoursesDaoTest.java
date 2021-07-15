@@ -3,11 +3,8 @@ package ua.com.foxminded.domain.dao;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ua.com.foxminded.config.Context;
-import ua.com.foxminded.config.DBConnection;
 import ua.com.foxminded.config.InitialScriptRunner;
 import ua.com.foxminded.domain.entity.CourseEntity;
-import ua.com.foxminded.service.CourseService;
-
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;

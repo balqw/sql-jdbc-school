@@ -7,10 +7,8 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import ua.com.foxminded.domain.dao.CoursesDao;
 import ua.com.foxminded.domain.entity.CourseEntity;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -19,8 +17,6 @@ class CourseServiceTest {
 
     private static final String COURSE_NAME = "COURSE_NAME";
     private static final String COURSE_DESCRIPTION = "COURSE_DESCRIPTION";
-
-
     private CoursesDao coursesDao;
     private CourseService courseService;
 

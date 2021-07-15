@@ -7,7 +7,6 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import ua.com.foxminded.domain.dao.GroupsDao;
 import ua.com.foxminded.domain.entity.GroupEntity;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -21,7 +20,6 @@ import static org.mockito.Mockito.*;
 class GroupServiceTest {
 
     private static final String GROUP_NAME = "GROUP_NAME";
-
     private GroupService groupService;
     private GroupsDao groupsDao;
 

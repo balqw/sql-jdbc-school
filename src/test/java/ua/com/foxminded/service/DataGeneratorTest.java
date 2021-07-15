@@ -39,17 +39,6 @@ class DataGeneratorTest {
     }
 
     @Test
-    void methodGeneratedStudentCourseShouldSelectToStudentCourse() {
-           dataGenerator.generateCourses();
-           dataGenerator.generateGroups();
-           dataGenerator.generateStudents();
-           dataGenerator.generatedStudentCourse();
-
-           /*как сделать проверку теста ?*/
-
-    }
-
-    @Test
     void methodGenerateCoursesShouldCreateTenCourses() {
         dataGenerator.generateCourses();
         int actualFields = courseService.readAll().size();

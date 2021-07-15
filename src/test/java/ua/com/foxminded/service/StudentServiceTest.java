@@ -7,9 +7,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import ua.com.foxminded.domain.dao.StudentsDao;
 import ua.com.foxminded.domain.entity.StudentEntity;
-
 import java.util.*;
-
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -19,7 +17,6 @@ public class StudentServiceTest {
 
     private static final String STUDENT_FIRST_NAME = "STUDENT_FIRST_NAME";
     private static final String STUDENT_LAST_NAME = "STUDENT_LAST_NAME";
-
     private StudentService studentService;
     private StudentsDao studentsDao;
 
